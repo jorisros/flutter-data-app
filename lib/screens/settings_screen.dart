@@ -22,24 +22,29 @@ class _SettingsScreenState extends State<SettingsScreen> {
   Future<void> _loadBackendUrl() async {
     final settingsService = Provider.of<SettingsService>(context, listen: false);
     final backendUrl = await settingsService.getBackendUrl();
+    if (!mounted) return;
     if (backendUrl != null) {
       _backendUrlController.text = backendUrl;
     }
   }
 
   Future<void> _saveBackendUrl() async {
+    final settingsService = Provider.of<SettingsService>(context, listen: false);
+    final messenger = ScaffoldMessenger.of(context);
+
     setState(() {
       _isLoading = true;
     });
 
-    final settingsService = Provider.of<SettingsService>(context, listen: false);
     await settingsService.saveBackendUrl(_backendUrlController.text);
+
+    if (!mounted) return;
 
     setState(() {
       _isLoading = false;
     });
 
-    ScaffoldMessenger.of(context).showSnackBar(
+    messenger.showSnackBar(
       const SnackBar(content: Text('Backend URL saved!')),
     );
   }

@@ -17,7 +17,9 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
-    Provider.of<AppProvider>(context, listen: false).loadConfig();
+    Future.microtask(() => 
+      Provider.of<AppProvider>(context, listen: false).loadConfig()
+    );
   }
 
   @override
