@@ -26,16 +26,20 @@ class MyApp extends StatelessWidget {
           update: (context, auth, settings, previous) => ApiService(auth, settings),
         ),
         ChangeNotifierProxyProvider<ApiService, AppProvider>(
-          create: (context) => AppProvider(context.read<ApiService>()),
+          create: (context) => AppProvider(context.read<ApiService>())..loadConfig(),
           update: (context, apiService, previous) => AppProvider(apiService),
         ),
       ],
-      child: MaterialApp(
-        title: 'Dynamic App',
-        theme: ThemeData(
-          primarySwatch: Colors.blue,
-        ),
-        home: const AuthCheck(),
+      child: Consumer<AppProvider>(
+        builder: (context, appProvider, child) {
+          return MaterialApp(
+            title: appProvider.appConfig?.settings.name ?? 'Dynamic App',
+            theme: ThemeData(
+              primarySwatch: Colors.blue,
+            ),
+            home: const AuthCheck(),
+          );
+        },
       ),
     );
   }
