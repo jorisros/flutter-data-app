@@ -4,6 +4,7 @@ import 'auth_service.dart';
 import 'login_screen.dart';
 import 'package:myapp/screens/home_screen.dart';
 import 'package:myapp/settings_service.dart';
+import 'app_provider.dart';
 
 void main() {
   runApp(const MyApp());
@@ -20,8 +21,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(
           create: (context) => AuthService(context.read<SettingsService>()),
         ),
-        // Assuming AppProvider is also a ChangeNotifier
-        // ChangeNotifierProvider(create: (_) => AppProvider()), 
+        ChangeNotifierProvider(create: (_) => AppProvider()),
       ],
       child: MaterialApp(
         title: 'Dynamic App',
