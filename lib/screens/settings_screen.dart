@@ -23,9 +23,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
     final settingsService = Provider.of<SettingsService>(context, listen: false);
     final backendUrl = await settingsService.getBackendUrl();
     if (!mounted) return;
-    if (backendUrl != null) {
-      _backendUrlController.text = backendUrl;
-    }
+    _backendUrlController.text = backendUrl;
   }
 
   Future<void> _saveBackendUrl() async {
@@ -63,6 +61,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
               controller: _backendUrlController,
               decoration: const InputDecoration(
                 labelText: 'Backend URL',
+                hintText: 'https://organiseyou.ddev.site/api',
               ),
             ),
             const SizedBox(height: 24.0),

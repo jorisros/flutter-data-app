@@ -14,9 +14,6 @@ class AuthService with ChangeNotifier {
 
   Future<bool> login(String email, String password) async {
     final backendUrl = await _settingsService.getBackendUrl();
-    if (backendUrl == null) {
-      return false;
-    }
 
     final response = await http.post(
       Uri.parse('$backendUrl/get-token'),
