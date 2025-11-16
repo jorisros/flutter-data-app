@@ -1,19 +1,20 @@
-
 import 'package:flutter/material.dart';
 import 'package:myapp/models/app_config.dart';
-import 'package:myapp/services/json_service.dart';
+import 'package:myapp/services/api_service.dart';
 
 class AppProvider with ChangeNotifier {
-  AppConfig? _appConfig;
-  Grid? _selectedGrid;
+  final ApiService _apiService;
 
+  AppConfig? _appConfig;
   AppConfig? get appConfig => _appConfig;
+
+  Grid? _selectedGrid;
   Grid? get selectedGrid => _selectedGrid;
 
-  final JsonService _jsonService = JsonService();
+  AppProvider(this._apiService);
 
   Future<void> loadConfig() async {
-    _appConfig = await _jsonService.loadConfig();
+    _appConfig = await _apiService.getAppConfig();
     notifyListeners();
   }
 
