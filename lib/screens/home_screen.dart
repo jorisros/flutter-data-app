@@ -4,6 +4,7 @@ import '../auth_service.dart';
 import 'package:myapp/providers/app_provider.dart';
 import 'package:myapp/widgets/dynamic_form.dart';
 import 'package:myapp/widgets/side_menu.dart';
+import 'settings_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -27,6 +28,16 @@ class _HomeScreenState extends State<HomeScreen> {
       appBar: AppBar(
         title: const Text('Dynamic App'),
         actions: [
+          IconButton(
+            icon: const Icon(Icons.settings),
+            onPressed: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) => const SettingsScreen(),
+                ),
+              );
+            },
+          ),
           IconButton(
             icon: const Icon(Icons.logout),
             onPressed: () async {

@@ -13,7 +13,22 @@ This is a Flutter application that demonstrates how to build a data-driven app w
 *   **Authentication State Management:** The `provider` package is used to manage the user's authentication state throughout the app.
 *   **Conditional Navigation:** The app shows the login screen if the user is not authenticated, and the home screen if they are.
 
-## Current Task: Implement Login Functionality
+### Settings
+
+*   **Settings Screen:** A screen where the user can configure the backend URL.
+*   **Persistent Storage:** The backend URL is saved locally on the device using `shared_preferences`.
+
+## Current Task: Add Settings Screen
+
+### Plan
+
+1.  **Add `shared_preferences`:** Add the `shared_preferences` package to the project.
+2.  **Create a `SettingsService`:** Create a service to manage saving and retrieving the backend URL.
+3.  **Update the `AuthService`:** Modify the `AuthService` to use the backend URL from the `SettingsService`.
+4.  **Create a `SettingsScreen`:** Build a UI for the settings screen.
+5.  **Add Navigation:** Add a settings icon to the `AppBar` of the `HomeScreen` to navigate to the `SettingsScreen`.
+
+## Previous Task: Implement Login Functionality
 
 ### Plan
 
@@ -24,7 +39,7 @@ This is a Flutter application that demonstrates how to build a data-driven app w
 5.  **Conditional Navigation:** Implement logic to show the login screen or home screen based on the authentication state.
 6.  **Add Logout Button:** Add a logout button to the home screen.
 
-## Previous Task: Initial Project Setup
+## Initial Project Setup
 
 ### Plan
 
