@@ -19,7 +19,7 @@ class _HomeScreenState extends State<HomeScreen> {
     super.initState();
     Future.microtask(() {
       if (mounted) {
-        Provider.of<AppProvider>(context, listen: false).loadConfig();
+        Provider.of<AppProvider>(context, listen: false).loadDashboards();
       }
     });
   }
@@ -27,11 +27,28 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     final authService = Provider.of<AuthService>(context, listen: false);
+    final appProvider = Provider.of<AppProvider>(context);
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Dynamic App'),
+        title: Text(appProvider.appConfig?.settings.name ?? 'Dynamic App'),
         actions: [
+          if (appProvider.dashboards.length > 1)
+            DropdownButton<String>(
+              value: appProvider.selectedDashboard?.id,
+              onChanged: (String? newValue) {
+                if (newValue != null) {
+                  final dashboard = appProvider.dashboards.firstWhere((d) => d.id == newValue);
+                  appProvider.setSelectedDashboard(dashboard);
+                }
+              },
+              items: appProvider.dashboards.map<DropdownMenuItem<String>>((dashboard) {
+                return DropdownMenuItem<String>(
+                  value: dashboard.id,
+                  child: Text(dashboard.name),
+                );
+              }).toList(),
+            ),
           IconButton(
             icon: const Icon(Icons.settings),
             onPressed: () {

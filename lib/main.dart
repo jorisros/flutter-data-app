@@ -26,8 +26,8 @@ class MyApp extends StatelessWidget {
           update: (context, auth, settings, previous) => ApiService(auth, settings),
         ),
         ChangeNotifierProxyProvider<ApiService, AppProvider>(
-          create: (context) => AppProvider(context.read<ApiService>())..loadConfig(),
-          update: (context, apiService, previous) => AppProvider(apiService),
+          create: (context) => AppProvider(context.read<ApiService>()),
+          update: (context, apiService, appProvider) => appProvider!..updateApiService(apiService),
         ),
       ],
       child: Consumer<AppProvider>(
