@@ -17,8 +17,16 @@ This is a Flutter application that demonstrates how to build a data-driven app w
 
 *   **Settings Screen:** A screen where the user can configure the backend URL.
 *   **Persistent Storage:** The backend URL is saved locally on the device using `shared_preferences`.
+*   **Settings Access:** The settings screen is accessible from both the login screen and the home screen via a gear icon in the `AppBar`.
 
-## Current Task: Add Settings Screen
+## Current Task: Add Settings Access from Login Screen
+
+### Plan
+
+1.  **Add Settings Icon:** Add a gear icon to the `AppBar` of the `LoginScreen`.
+2.  **Navigate to Settings:** When the gear icon is tapped, navigate to the `SettingsScreen`.
+
+## Previous Task: Implement Settings Screen
 
 ### Plan
 
@@ -27,17 +35,6 @@ This is a Flutter application that demonstrates how to build a data-driven app w
 3.  **Update the `AuthService`:** Modify the `AuthService` to use the backend URL from the `SettingsService`.
 4.  **Create a `SettingsScreen`:** Build a UI for the settings screen.
 5.  **Add Navigation:** Add a settings icon to the `AppBar` of the `HomeScreen` to navigate to the `SettingsScreen`.
-
-## Previous Task: Implement Login Functionality
-
-### Plan
-
-1.  **Add Dependencies:** Add `http` for API calls and `flutter_secure_storage` for secure token storage.
-2.  **Create Authentication Service:** Create a service to handle authentication against the provided Swagger API.
-3.  **Create Login Screen:** Build a UI for the login screen.
-4.  **Manage Authentication State:** Use `provider` to manage the user's authentication state.
-5.  **Conditional Navigation:** Implement logic to show the login screen or home screen based on the authentication state.
-6.  **Add Logout Button:** Add a logout button to the home screen.
 
 ## Initial Project Setup
 
