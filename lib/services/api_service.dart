@@ -20,10 +20,8 @@ class ApiService {
     }
 
     final response = await http.get(
-      Uri.parse('$backendUrl/api/dashboard'),
-      headers: {
-        'Authorization': 'Bearer $token',
-      },
+      Uri.parse('$backendUrl/dashboard'),
+      headers: {'Authorization': 'Bearer $token'},
     );
 
     if (response.statusCode == 200) {
@@ -44,9 +42,7 @@ class ApiService {
 
     final response = await http.get(
       Uri.parse('$backendUrl/api/dashboard/$dashboardId'),
-      headers: {
-        'Authorization': 'Bearer $token',
-      },
+      headers: {'Authorization': 'Bearer $token'},
     );
 
     if (response.statusCode == 200) {
@@ -66,9 +62,7 @@ class ApiService {
 
     final response = await http.get(
       Uri.parse('$backendUrl/api/config'),
-      headers: {
-        'Authorization': 'Bearer $token',
-      },
+      headers: {'Authorization': 'Bearer $token'},
     );
 
     if (response.statusCode == 200) {
