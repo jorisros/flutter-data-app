@@ -1,8 +1,8 @@
-
 import 'package:flutter/material.dart';
-import 'package:myapp/providers/app_provider.dart';
-import 'package:myapp/screens/home_screen.dart';
 import 'package:provider/provider.dart';
+import 'auth_service.dart';
+import 'login_screen.dart';
+import 'package:myapp/screens/home_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -13,15 +13,43 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (context) => AppProvider(),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => AuthService()),
+        // Assuming AppProvider is also a ChangeNotifier
+        // ChangeNotifierProvider(create: (_) => AppProvider()), 
+      ],
       child: MaterialApp(
         title: 'Dynamic App',
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
-        home: const HomeScreen(),
+        home: const AuthCheck(),
       ),
+    );
+  }
+}
+
+class AuthCheck extends StatelessWidget {
+  const AuthCheck({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final authService = Provider.of<AuthService>(context);
+
+    return FutureBuilder<bool>(
+      future: authService.isAuthenticated(),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const Scaffold(
+            body: Center(child: CircularProgressIndicator()),
+          );
+        }
+        if (snapshot.hasData && snapshot.data!) {
+          return const HomeScreen();
+        }
+        return const LoginScreen();
+      },
     );
   }
 }

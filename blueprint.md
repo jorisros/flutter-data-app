@@ -6,9 +6,25 @@ This is a Flutter application that demonstrates how to build a data-driven app w
 
 ## Style, Design, and Features
 
-This section will be updated as the project evolves to document the implemented style, design, and features.
+### Authentication
 
-## Current Task: Initial Project Setup
+*   **Login Screen:** A screen with email and password fields for user authentication.
+*   **Secure Token Storage:** The authentication token is securely stored on the device using `flutter_secure_storage`.
+*   **Authentication State Management:** The `provider` package is used to manage the user's authentication state throughout the app.
+*   **Conditional Navigation:** The app shows the login screen if the user is not authenticated, and the home screen if they are.
+
+## Current Task: Implement Login Functionality
+
+### Plan
+
+1.  **Add Dependencies:** Add `http` for API calls and `flutter_secure_storage` for secure token storage.
+2.  **Create Authentication Service:** Create a service to handle authentication against the provided Swagger API.
+3.  **Create Login Screen:** Build a UI for the login screen.
+4.  **Manage Authentication State:** Use `provider` to manage the user's authentication state.
+5.  **Conditional Navigation:** Implement logic to show the login screen or home screen based on the authentication state.
+6.  **Add Logout Button:** Add a logout button to the home screen.
+
+## Previous Task: Initial Project Setup
 
 ### Plan
 
