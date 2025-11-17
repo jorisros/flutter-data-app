@@ -19,13 +19,13 @@ class SideMenu extends StatelessWidget {
           return ListView(
             children: [
               DrawerHeader(
-                decoration: const BoxDecoration(
-                  color: Colors.deepPurple,
+                decoration: BoxDecoration(
+                  color: Theme.of(context).colorScheme.primary,
                 ),
                 child: Text(
                   dashboard.settings.name,
-                  style: const TextStyle(
-                    color: Colors.white,
+                  style: TextStyle(
+                    color: Theme.of(context).colorScheme.onPrimary,
                     fontSize: 24,
                   ),
                 ),
