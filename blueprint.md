@@ -81,28 +81,18 @@ The following steps were taken to resolve this:
 
 This cleanup ensures that the application now consistently uses a single, correct source for authentication logic and UI, resolving the login failures and improving the overall stability and maintainability of the project.
 
-## State Management Race Condition Fix
+## Improved State Management for Instant Navigation
 
-A race condition was identified that caused the `SideMenu` to show a perpetual loading spinner. This occurred because the `HomeScreen` was being built before the `DashboardProvider` had finished updating the `selectedDashboard`.
+An issue was identified where the UI would "freeze" or become unresponsive after selecting a dashboard. This was caused by `await`ing a network call for the grid data before navigating, which blocked the UI thread.
 
-*   **Problem:** The `onTap` handler in `DashboardSelectionScreen` was calling an `async` method (`selectDashboard`) on the provider but was not `await`ing its completion before navigating to the next screen.
+*   **Problem:** An initial attempt to fix a race condition involved `await`ing the `selectDashboard` method, which included a network request. This locked the UI, creating a poor user experience.
 
-*   **Solution:** The `onTap` handler was converted to an `async` function, and the call to `selectDashboard` is now `await`ed. This guarantees that the provider's state is fully updated *before* the navigation occurs, ensuring the `HomeScreen` and its `SideMenu` are built with the correct data.
+*   **Solution:** The state management logic was refactored to ensure instant navigation while data loads in the background.
+    1.  **Synchronous State Update:** The `selectDashboard` method in `DashboardProvider` was changed to be synchronous (`void`). It now immediately sets the `_selectedDashboard` and notifies listeners. This allows the UI to update instantly with the new dashboard information (like the `SideMenu`).
+    2.  **Background Data Fetching:** After the initial synchronous update, `selectDashboard` then calls the `async` `selectGrid` method *without* awaiting it. This triggers the network request for the grid data in the background.
+    3.  **Responsive UI:** The `onTap` handler in `DashboardSelectionScreen` was reverted to a simple synchronous navigation call. The result is that the user is navigated to the `HomeScreen` instantly. The `SideMenu` appears immediately, and the main content area shows a loading indicator until the background grid data fetch is complete.
 
-*   **Code Change:**
-
-    ```dart
-    onTap: () async { // <-- Made the handler async
-      await dashboardProvider.selectDashboard(dashboard); // <-- Awaited the provider method
-      if (!context.mounted) return; // <-- Added a check for the widget's context
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => const HomeScreen()),
-      );
-    },
-    ```
-
-This change resolves the race condition and ensures a smooth and predictable user experience when selecting a dashboard.
+This two-part change provides a smooth, responsive user experience, eliminating both the original race condition and the subsequent UI freeze.
 
 ## Plan
 

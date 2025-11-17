@@ -27,7 +27,8 @@ class DashboardProvider with ChangeNotifier {
       _dashboards = await _dashboardService.getDashboards();
       if (_dashboards != null && _dashboards!.isNotEmpty) {
         if (_dashboards!.length == 1) {
-          await selectDashboard(_dashboards!.first);
+          // No need to await here, let it load in the background
+          selectDashboard(_dashboards!.first);
         }
       }
     } finally {
@@ -36,15 +37,22 @@ class DashboardProvider with ChangeNotifier {
     }
   }
 
-  Future<void> selectDashboard(Map<String, dynamic> dashboardData) async {
+  // This is now a synchronous method for instant state updates
+  void selectDashboard(Map<String, dynamic> dashboardData) {
     _selectedDashboard = Dashboard.fromJson(dashboardData);
+    
+    // Notify listeners immediately so the UI can rebuild with the selected dashboard
+    notifyListeners();
+
+    // Now, load the grid data in the background
     if (_selectedDashboard!.grids.isNotEmpty) {
-      await selectGrid(_selectedDashboard!.grids.first);
+      selectGrid(_selectedDashboard!.grids.first);
     } else {
       _selectedGrid = null;
       _gridData = null;
+      // Notify again in case there are no grids
+      notifyListeners();
     }
-    notifyListeners();
   }
 
   Future<void> selectGrid(Grid grid) async {

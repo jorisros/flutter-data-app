@@ -22,9 +22,8 @@ class DashboardSelectionScreen extends StatelessWidget {
               final dashboard = dashboards[index];
               return ListTile(
                 title: Text(dashboard['settings']['name'] ?? 'Unnamed Dashboard'),
-                onTap: () async {
-                  await dashboardProvider.selectDashboard(dashboard);
-                  if (!context.mounted) return;
+                onTap: () {
+                  dashboardProvider.selectDashboard(dashboard);
                   Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(builder: (context) => const HomeScreen()),
