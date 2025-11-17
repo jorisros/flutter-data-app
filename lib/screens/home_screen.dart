@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:organiseyou/auth/auth_service.dart';
 import 'package:organiseyou/providers/dashboard_provider.dart';
+import 'package:organiseyou/screens/dashboard_selection_screen.dart';
 import 'package:organiseyou/screens/login_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:organiseyou/widgets/side_menu.dart';
@@ -18,6 +19,17 @@ class HomeScreen extends StatelessWidget {
       appBar: AppBar(
         title: Text(title),
         actions: [
+          IconButton(
+            icon: const Icon(Icons.dashboard),
+            tooltip: 'Select Dashboard',
+            onPressed: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) => const DashboardSelectionScreen(),
+                ),
+              );
+            },
+          ),
           IconButton(
             icon: const Icon(Icons.logout),
             tooltip: 'Logout',
