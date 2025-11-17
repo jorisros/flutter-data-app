@@ -29,6 +29,7 @@ class DashboardSettings {
 class Grid {
   final String id;
   final String name;
+  @JsonKey(defaultValue: [])
   final List<GridColumn> columns;
 
   Grid({required this.id, required this.name, required this.columns});
@@ -40,9 +41,11 @@ class Grid {
 @JsonSerializable()
 class GridColumn {
   final String field;
-  final String label;
+  final String? label;
 
-  GridColumn({required this.field, required this.label});
+  GridColumn({required this.field, this.label});
+
+  String get displayLabel => label ?? field;
 
   factory GridColumn.fromJson(Map<String, dynamic> json) =>
       _$GridColumnFromJson(json);

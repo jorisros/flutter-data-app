@@ -29,9 +29,11 @@ Map<String, dynamic> _$DashboardSettingsToJson(DashboardSettings instance) =>
 Grid _$GridFromJson(Map<String, dynamic> json) => Grid(
   id: json['id'] as String,
   name: json['name'] as String,
-  columns: (json['columns'] as List<dynamic>)
-      .map((e) => GridColumn.fromJson(e as Map<String, dynamic>))
-      .toList(),
+  columns:
+      (json['columns'] as List<dynamic>?)
+          ?.map((e) => GridColumn.fromJson(e as Map<String, dynamic>))
+          .toList() ??
+      [],
 );
 
 Map<String, dynamic> _$GridToJson(Grid instance) => <String, dynamic>{
@@ -41,7 +43,7 @@ Map<String, dynamic> _$GridToJson(Grid instance) => <String, dynamic>{
 };
 
 GridColumn _$GridColumnFromJson(Map<String, dynamic> json) =>
-    GridColumn(field: json['field'] as String, label: json['label'] as String);
+    GridColumn(field: json['field'] as String, label: json['label'] as String?);
 
 Map<String, dynamic> _$GridColumnToJson(GridColumn instance) =>
     <String, dynamic>{'field': instance.field, 'label': instance.label};
