@@ -18,12 +18,10 @@ class HomeScreen extends StatelessWidget {
             icon: const Icon(Icons.logout),
             tooltip: 'Logout',
             onPressed: () {
-              Provider.of<AuthService>(context, listen: false).logout();
               Navigator.of(context).pushReplacement(
-                MaterialPageRoute(
-                  builder: (context) => const LoginScreen(),
-                ),
+                MaterialPageRoute(builder: (context) => const LoginScreen()),
               );
+              Provider.of<AuthService>(context, listen: false).logout();
             },
           ),
         ],
@@ -39,7 +37,8 @@ class HomeScreen extends StatelessWidget {
 
           if (grid == null) {
             return const Center(
-                child: Text('Please select a grid from the side menu.'));
+              child: Text('Please select a grid from the side menu.'),
+            );
           }
 
           // Temporarily simplified view
