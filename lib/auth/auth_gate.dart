@@ -11,7 +11,7 @@ class AuthGate extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer<AuthService>(
       builder: (context, authService, child) {
-        if (authService.isAuthenticated) {
+        if (authService.isLoggedIn) {
           return const HomeScreen();
         } else {
           return const LoginScreen();

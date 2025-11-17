@@ -1,20 +1,32 @@
 import 'package:flutter/material.dart';
+import 'dart:async';
 
-class AuthService extends ChangeNotifier {
-  bool _isAuthenticated = false;
+class AuthService with ChangeNotifier {
+  bool _isLoggedIn = false;
+  String _backendUrl = 'https://example.com'; // Default URL
 
-  bool get isAuthenticated => _isAuthenticated;
+  bool get isLoggedIn => _isLoggedIn;
+  String get backendUrl => _backendUrl;
 
-  Future<void> login(String username, String password) async {
-    // In a real app, you'd have network requests and error handling here
+  Future<bool> login(String username, String password) async {
+    // Mock login logic
     await Future.delayed(const Duration(seconds: 1));
-    _isAuthenticated = true;
-    notifyListeners();
+    if (username.isNotEmpty && password.isNotEmpty) {
+      _isLoggedIn = true;
+      notifyListeners();
+      return true;
+    } else {
+      return false;
+    }
   }
 
   Future<void> logout() async {
-    await Future.delayed(const Duration(seconds: 1));
-    _isAuthenticated = false;
+    _isLoggedIn = false;
+    notifyListeners();
+  }
+
+  void setBackendUrl(String url) {
+    _backendUrl = url;
     notifyListeners();
   }
 }
