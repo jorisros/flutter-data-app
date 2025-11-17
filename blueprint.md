@@ -81,6 +81,29 @@ The following steps were taken to resolve this:
 
 This cleanup ensures that the application now consistently uses a single, correct source for authentication logic and UI, resolving the login failures and improving the overall stability and maintainability of the project.
 
+## State Management Race Condition Fix
+
+A race condition was identified that caused the `SideMenu` to show a perpetual loading spinner. This occurred because the `HomeScreen` was being built before the `DashboardProvider` had finished updating the `selectedDashboard`.
+
+*   **Problem:** The `onTap` handler in `DashboardSelectionScreen` was calling an `async` method (`selectDashboard`) on the provider but was not `await`ing its completion before navigating to the next screen.
+
+*   **Solution:** The `onTap` handler was converted to an `async` function, and the call to `selectDashboard` is now `await`ed. This guarantees that the provider's state is fully updated *before* the navigation occurs, ensuring the `HomeScreen` and its `SideMenu` are built with the correct data.
+
+*   **Code Change:**
+
+    ```dart
+    onTap: () async { // <-- Made the handler async
+      await dashboardProvider.selectDashboard(dashboard); // <-- Awaited the provider method
+      if (!context.mounted) return; // <-- Added a check for the widget's context
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => const HomeScreen()),
+      );
+    },
+    ```
+
+This change resolves the race condition and ensures a smooth and predictable user experience when selecting a dashboard.
+
 ## Plan
 
 1.  **Authentication:**
