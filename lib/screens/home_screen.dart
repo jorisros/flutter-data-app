@@ -12,24 +12,26 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final dashboardProvider = Provider.of<DashboardProvider>(context);
-    final title = dashboardProvider.selectedDashboard?.settings.name ??
-        'Dashboard';
+    final title =
+        dashboardProvider.selectedDashboard?.settings.name ?? 'Dashboard';
 
     return Scaffold(
       appBar: AppBar(
         title: Text(title),
         actions: [
-          IconButton(
-            icon: const Icon(Icons.dashboard),
-            tooltip: 'Select Dashboard',
-            onPressed: () {
-              Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (context) => const DashboardSelectionScreen(),
-                ),
-              );
-            },
-          ),
+          if (dashboardProvider.dashboards != null &&
+              dashboardProvider.dashboards!.length > 1)
+            IconButton(
+              icon: const Icon(Icons.dashboard),
+              tooltip: 'Select Dashboard',
+              onPressed: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => const DashboardSelectionScreen(),
+                  ),
+                );
+              },
+            ),
           IconButton(
             icon: const Icon(Icons.logout),
             tooltip: 'Logout',

@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:organiseyou/providers/dashboard_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:organiseyou/auth/auth_service.dart';
+import 'package:organiseyou/screens/dashboard_selection_screen.dart';
+import 'package:organiseyou/screens/home_screen.dart';
 import 'package:organiseyou/screens/settings_screen.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -23,6 +26,9 @@ class _LoginScreenState extends State<LoginScreen> {
     });
 
     final authService = Provider.of<AuthService>(context, listen: false);
+    final dashboardProvider =
+        Provider.of<DashboardProvider>(context, listen: false);
+
     final success = await authService.login(
       _emailController.text,
       _passwordController.text,
@@ -30,12 +36,28 @@ class _LoginScreenState extends State<LoginScreen> {
 
     if (!mounted) return;
 
-    setState(() {
-      _isLoading = false;
-    });
+    if (success) {
+      await dashboardProvider.loadDashboards();
 
-    if (!success) {
+      if (!mounted) return;
+
+      if (dashboardProvider.dashboards!.length == 1) {
+        dashboardProvider.selectDashboard(dashboardProvider.dashboards!.first);
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(
+            builder: (context) => const HomeScreen(),
+          ),
+        );
+      } else {
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(
+            builder: (context) => const DashboardSelectionScreen(),
+          ),
+        );
+      }
+    } else {
       setState(() {
+        _isLoading = false;
         _errorMessage = 'Login failed. Please check your credentials.';
       });
     }
