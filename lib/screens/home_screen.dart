@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:organiseyou/auth/auth_service.dart';
 import 'package:organiseyou/providers/dashboard_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:organiseyou/widgets/side_menu.dart';
@@ -9,7 +10,18 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Dashboard')),
+      appBar: AppBar(
+        title: const Text('Dashboard'),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.logout),
+            tooltip: 'Logout',
+            onPressed: () {
+              Provider.of<AuthService>(context, listen: false).logout();
+            },
+          ),
+        ],
+      ),
       drawer: const SideMenu(),
       body: Consumer<DashboardProvider>(
         builder: (context, dashboardProvider, child) {
