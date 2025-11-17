@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:collection/collection.dart';
 import '../auth_service.dart';
-import 'package:myapp/providers/app_provider.dart';
-import 'package:myapp/widgets/dynamic_form.dart';
-import 'package:myapp/widgets/side_menu.dart';
+import 'package:organiseyou/providers/app_provider.dart';
+import 'package:organiseyou/widgets/dynamic_form.dart';
+import 'package:organiseyou/widgets/side_menu.dart';
 import 'settings_screen.dart';
 
 class HomeScreen extends StatefulWidget {

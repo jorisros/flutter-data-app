@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:myapp/providers/app_provider.dart';
+import 'package:organiseyou/providers/app_provider.dart';
 
 class SideMenu extends StatelessWidget {
   const SideMenu({super.key});

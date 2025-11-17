@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:myapp/models/app_config.dart';
-import 'package:myapp/models/dashboard.dart';
-import 'package:myapp/services/api_service.dart';
+import 'package:organiseyou/models/app_config.dart';
+import 'package:organiseyou/models/dashboard.dart';
+import 'package:organiseyou/services/api_service.dart';
 
 class AppProvider with ChangeNotifier {
   ApiService _apiService;
@@ -28,6 +28,9 @@ class AppProvider with ChangeNotifier {
     _dashboards = await _apiService.getDashboards();
     if (_dashboards.length == 1) {
       await setSelectedDashboard(_dashboards.first);
+    } else {
+      _selectedDashboard = null;
+      _appConfig = null;
     }
     notifyListeners();
   }

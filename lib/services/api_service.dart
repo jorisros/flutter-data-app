@@ -1,9 +1,9 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import 'package:myapp/auth_service.dart';
-import 'package:myapp/models/app_config.dart';
-import 'package:myapp/models/dashboard.dart';
-import 'package:myapp/settings_service.dart';
+import 'package:organiseyou/auth_service.dart';
+import 'package:organiseyou/models/app_config.dart';
+import 'package:organiseyou/models/dashboard.dart';
+import 'package:organiseyou/settings_service.dart';
 import 'dart:developer' as developer;
 
 class ApiService {

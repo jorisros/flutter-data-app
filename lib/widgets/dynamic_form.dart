@@ -1,6 +1,6 @@
 
 import 'package:flutter/material.dart';
-import 'package:myapp/models/app_config.dart' as config;
+import 'package:organiseyou/models/app_config.dart' as config;
 
 class DynamicForm extends StatelessWidget {
   final config.Form form;

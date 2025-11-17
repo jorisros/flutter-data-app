@@ -1,7 +1,7 @@
 
 import 'dart:convert';
 import 'package:flutter/services.dart';
-import 'package:myapp/models/app_config.dart';
+import 'package:organiseyou/models/app_config.dart';
 
 class JsonService {
   Future<AppConfig> loadConfig() async {
