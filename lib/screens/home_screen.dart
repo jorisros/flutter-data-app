@@ -12,7 +12,7 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final dashboardProvider = Provider.of<DashboardProvider>(context);
     final title = dashboardProvider.selectedGrid?.name ??
-        dashboardProvider.selectedDashboard?.name ??
+        dashboardProvider.selectedDashboard?.settings.name ??
         'Dashboard';
 
     return Scaffold(
