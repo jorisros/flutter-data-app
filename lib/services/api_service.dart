@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import 'package:organiseyou/auth_service.dart';
+import 'package:organiseyou/auth/auth_service.dart';
 import 'package:organiseyou/models/app_config.dart';
 import 'package:organiseyou/models/dashboard.dart';
 import 'package:organiseyou/settings_service.dart';

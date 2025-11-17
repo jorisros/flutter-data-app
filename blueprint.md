@@ -63,6 +63,24 @@ The application now supports multiple dashboards.
 3.  **`DashboardProvider` Update:**
     *   The provider now manages a list of dashboards and a `selectedDashboard`.
 
+## Code Consolidation and Conflict Resolution
+
+A critical issue was identified where duplicate files for authentication and the login screen were causing runtime conflicts. This led to the application using outdated code, resulting in login failures despite the backend URL being correctly configured in the settings.
+
+The following steps were taken to resolve this:
+
+1.  **File Consolidation:**
+    *   The content of the outdated `lib/login_screen.dart` was merged into the correct `lib/screens/login_screen.dart` to preserve the most recent UI and logic.
+2.  **Duplicate File Removal:**
+    *   The redundant `lib/login_screen.dart` was deleted.
+    *   The redundant `lib/auth_service.dart` was deleted to ensure only the version in `lib/auth/auth_service.dart` is used.
+3.  **Import Path Correction:**
+    *   The file `lib/services/api_service.dart` was referencing the deleted `auth_service.dart`. Its import path was updated to `package:organiseyou/auth/auth_service.dart`.
+4.  **Verification:**
+    *   A full project analysis (`flutter analyze`) was performed to confirm that all conflicts were resolved and the codebase is clean.
+
+This cleanup ensures that the application now consistently uses a single, correct source for authentication logic and UI, resolving the login failures and improving the overall stability and maintainability of the project.
+
 ## Plan
 
 1.  **Authentication:**

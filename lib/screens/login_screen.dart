@@ -11,9 +11,35 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  final TextEditingController _usernameController = TextEditingController();
-  final TextEditingController _passwordController = TextEditingController();
+  final _emailController = TextEditingController();
+  final _passwordController = TextEditingController();
+  bool _isLoading = false;
   String? _errorMessage;
+
+  Future<void> _login() async {
+    setState(() {
+      _isLoading = true;
+      _errorMessage = null;
+    });
+
+    final authService = Provider.of<AuthService>(context, listen: false);
+    final success = await authService.login(
+      _emailController.text,
+      _passwordController.text,
+    );
+
+    if (!mounted) return;
+
+    setState(() {
+      _isLoading = false;
+    });
+
+    if (!success) {
+      setState(() {
+        _errorMessage = 'Login failed. Please check your credentials.';
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -24,9 +50,10 @@ class _LoginScreenState extends State<LoginScreen> {
           IconButton(
             icon: const Icon(Icons.settings),
             onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => const SettingsScreen()),
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) => const SettingsScreen(),
+                ),
               );
             },
           ),
@@ -38,38 +65,36 @@ class _LoginScreenState extends State<LoginScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             TextField(
-              controller: _usernameController,
-              decoration: const InputDecoration(labelText: 'Username'),
+              controller: _emailController,
+              decoration: const InputDecoration(
+                labelText: 'Email',
+              ),
+              keyboardType: TextInputType.emailAddress,
             ),
+            const SizedBox(height: 16.0),
             TextField(
               controller: _passwordController,
-              decoration: const InputDecoration(labelText: 'Password'),
+              decoration: const InputDecoration(
+                labelText: 'Password',
+              ),
               obscureText: true,
             ),
+            const SizedBox(height: 24.0),
+            if (_isLoading)
+              const CircularProgressIndicator()
+            else
+              ElevatedButton(
+                onPressed: _login,
+                child: const Text('Login'),
+              ),
             if (_errorMessage != null)
               Padding(
-                padding: const EdgeInsets.all(8.0),
+                padding: const EdgeInsets.only(top: 16.0),
                 child: Text(
                   _errorMessage!,
                   style: const TextStyle(color: Colors.red),
                 ),
               ),
-            const SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: () async {
-                final authService = Provider.of<AuthService>(context, listen: false);
-                final success = await authService.login(
-                  _usernameController.text,
-                  _passwordController.text,
-                );
-                if (!success) {
-                  setState(() {
-                    _errorMessage = 'Login failed. Please check your credentials.';
-                  });
-                }
-              },
-              child: const Text('Login'),
-            ),
           ],
         ),
       ),
