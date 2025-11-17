@@ -4,6 +4,10 @@ import 'package:organiseyou/models/dashboard_service.dart';
 import 'package:organiseyou/models/grid_service.dart';
 
 class DashboardProvider with ChangeNotifier {
+  final DashboardService _dashboardService;
+
+  DashboardProvider(this._dashboardService);
+
   List<dynamic>? _dashboards;
   Dashboard? _selectedDashboard;
   Grid? _selectedGrid;
@@ -20,7 +24,7 @@ class DashboardProvider with ChangeNotifier {
     _isLoading = true;
     notifyListeners();
     try {
-      _dashboards = await DashboardService().getDashboards();
+      _dashboards = await _dashboardService.getDashboards();
       if (_dashboards != null && _dashboards!.isNotEmpty) {
         if (_dashboards!.length == 1) {
           await selectDashboard(_dashboards!.first);

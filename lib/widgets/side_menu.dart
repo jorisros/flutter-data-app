@@ -20,7 +20,7 @@ class SideMenu extends StatelessWidget {
             children: [
               DrawerHeader(
                 decoration: const BoxDecoration(
-                  color: ,
+                  color: Colors.deepPurple,
                 ),
                 child: Text(
                   dashboard.settings.name,
@@ -35,7 +35,9 @@ class SideMenu extends StatelessWidget {
                   title: Text(grid.name),
                   onTap: () async {
                     await dashboardProvider.selectGrid(grid);
-                    Navigator.pop(context);
+                    if (context.mounted) {
+                      Navigator.pop(context);
+                    }
                   },
                 );
               }),

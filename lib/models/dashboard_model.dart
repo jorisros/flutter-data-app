@@ -2,45 +2,36 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'dashboard_model.g.dart';
 
-@JsonSerializable(explicitToJson: true)
+@JsonSerializable()
 class Dashboard {
-  final Settings settings;
+  final DashboardSettings settings;
   final List<Grid> grids;
-  final List<Entity> entities;
 
-  Dashboard({
-    required this.settings,
-    required this.grids,
-    required this.entities,
-  });
+  Dashboard({required this.settings, required this.grids});
 
-  factory Dashboard.fromJson(Map<String, dynamic> json) => _$DashboardFromJson(json);
+  factory Dashboard.fromJson(Map<String, dynamic> json) =>
+      _$DashboardFromJson(json);
   Map<String, dynamic> toJson() => _$DashboardToJson(this);
 }
 
 @JsonSerializable()
-class Settings {
+class DashboardSettings {
   final String name;
 
-  Settings({required this.name});
+  DashboardSettings({required this.name});
 
-  factory Settings.fromJson(Map<String, dynamic> json) => _$SettingsFromJson(json);
-  Map<String, dynamic> toJson() => _$SettingsToJson(this);
+  factory DashboardSettings.fromJson(Map<String, dynamic> json) =>
+      _$DashboardSettingsFromJson(json);
+  Map<String, dynamic> toJson() => _$DashboardSettingsToJson(this);
 }
 
-@JsonSerializable(explicitToJson: true)
+@JsonSerializable()
 class Grid {
   final String id;
   final String name;
-  final String entity;
   final List<GridColumn> columns;
 
-  Grid({
-    required this.id,
-    required this.name,
-    required this.entity,
-    required this.columns,
-  });
+  Grid({required this.id, required this.name, required this.columns});
 
   factory Grid.fromJson(Map<String, dynamic> json) => _$GridFromJson(json);
   Map<String, dynamic> toJson() => _$GridToJson(this);
@@ -53,54 +44,7 @@ class GridColumn {
 
   GridColumn({required this.field, required this.label});
 
-  factory GridColumn.fromJson(Map<String, dynamic> json) => _$GridColumnFromJson(json);
+  factory GridColumn.fromJson(Map<String, dynamic> json) =>
+      _$GridColumnFromJson(json);
   Map<String, dynamic> toJson() => _$GridColumnToJson(this);
-}
-
-@JsonSerializable(explicitToJson: true)
-class Entity {
-  final String id;
-  final String name;
-  final List<Form> forms;
-
-  Entity({
-    required this.id,
-    required this.name,
-    required this.forms,
-  });
-
-  factory Entity.fromJson(Map<String, dynamic> json) => _$EntityFromJson(json);
-  Map<String, dynamic> toJson() => _$EntityToJson(this);
-}
-
-@JsonSerializable(explicitToJson: true)
-class Form {
-  final String id;
-  final String name;
-  final List<FormField> fields;
-
-  Form({
-    required this.id,
-    required this.name,
-    required this.fields,
-  });
-
-  factory Form.fromJson(Map<String, dynamic> json) => _$FormFromJson(json);
-  Map<String, dynamic> toJson() => _$FormToJson(this);
-}
-
-@JsonSerializable()
-class FormField {
-  final String id;
-  final String label;
-  final String type;
-
-  FormField({
-    required this.id,
-    required this.label,
-    required this.type,
-  });
-
-  factory FormField.fromJson(Map<String, dynamic> json) => _$FormFieldFromJson(json);
-  Map<String, dynamic> toJson() => _$FormFieldToJson(this);
 }

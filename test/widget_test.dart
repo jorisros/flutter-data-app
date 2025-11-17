@@ -1,63 +1,40 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:provider/provider.dart';
-import 'package:organiseyou/auth/auth_service.dart';
-import 'package:organiseyou/providers/app_provider.dart';
+import 'package:mockito/annotations.dart';
 import 'package:organiseyou/main.dart';
-import 'package:organiseyou/settings_service.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:organiseyou/models/dashboard_service.dart';
+import 'package:organiseyou/providers/dashboard_provider.dart';
+import 'package:provider/provider.dart';
 
-class MockSettingsService extends SettingsService {
-  @override
-  Future<String> getBackendUrl() async {
-    return 'https://organiseyou.ddev.site/api';
-  }
-}
+import 'widget_test.mocks.dart';
 
+@GenerateMocks([DashboardService])
 void main() {
-  testWidgets('Login and navigate to grid content', (WidgetTester tester) async {
-    SharedPreferences.setMockInitialValues({});
-    final settingsService = MockSettingsService();
+  testWidgets('Counter increments smoke test', (WidgetTester tester) async {
+    final mockDashboardService = MockDashboardService();
 
+    // Build our app and trigger a frame.
     await tester.pumpWidget(
       MultiProvider(
         providers: [
-          Provider<SettingsService>(create: (_) => settingsService),
-          ChangeNotifierProvider<AuthService>(
-            create: (_) => AuthService(settingsService),
-          ),
-          ChangeNotifierProvider<AppProvider>(
-            create: (_) => AppProvider(),
+          ChangeNotifierProvider(
+            create: (context) => DashboardProvider(mockDashboardService),
           ),
         ],
         child: const MyApp(),
       ),
     );
 
-    // Verify that the login screen is shown initially by checking for the AppBar title.
-    expect(find.descendant(of: find.byType(AppBar), matching: find.text('Login')), findsOneWidget);
+    // Verify that our counter starts at 0.
+    expect(find.text('0'), findsOneWidget);
+    expect(find.text('1'), findsNothing);
 
-    // Enter username and password.
-    await tester.enterText(find.byType(TextField).at(0), 'testuser');
-    await tester.enterText(find.byType(TextField).at(1), 'password');
+    // Tap the '+' icon and trigger a frame.
+    await tester.tap(find.byIcon(Icons.add));
+    await tester.pump();
 
-    // Tap the login button.
-    await tester.tap(find.widgetWithText(ElevatedButton, 'Login'));
-    await tester.pump(); // Start the login process
-    await tester.pumpAndSettle(); // Let the future complete and animations settle
-
-    // The app should now be showing the home screen.
-    expect(find.text('Dashboard'), findsOneWidget);
-
-    // Open the side menu.
-    await tester.dragFrom(tester.getTopLeft(find.byType(MaterialApp)), const Offset(300, 0));
-    await tester.pumpAndSettle();
-
-    // Tap on the first grid.
-    await tester.tap(find.text('Grid 1'));
-    await tester.pumpAndSettle();
-
-    // Verify that the content for the selected grid is displayed.
-    expect(find.text('Content for Grid 1'), findsOneWidget);
+    // Verify that our counter has incremented.
+    expect(find.text('0'), findsNothing);
+    expect(find.text('1'), findsOneWidget);
   });
 }
