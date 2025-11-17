@@ -3,7 +3,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:organiseyou/theme_provider.dart';
 import 'package:organiseyou/dashboard_provider.dart';
-import 'package:organiseyou/models.dart';
 
 void main() {
   runApp(
@@ -68,7 +67,7 @@ class MyApp extends StatelessWidget {
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
           foregroundColor: Colors.black,
-          backgroundColor: primarySeedColor.shade200,
+          backgroundColor: Colors.deepPurple.shade200,
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
           padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
           textStyle: GoogleFonts.roboto(fontSize: 16, fontWeight: FontWeight.w500),

@@ -11,20 +11,26 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:organiseyou/main.dart';
 
 void main() {
-  testWidgets('Counter increments smoke test', (WidgetTester tester) async {
+  testWidgets('Renders dashboard and shows data table', (WidgetTester tester) async {
     // Build our app and trigger a frame.
-    await tester.pumpWidget(const Organiseyou());
+    await tester.pumpWidget(const MyApp());
 
-    // Verify that our counter starts at 0.
-    expect(find.text('0'), findsOneWidget);
-    expect(find.text('1'), findsNothing);
+    // Expect to see the app bar title.
+    expect(find.text('Dashboard'), findsOneWidget);
 
-    // Tap the '+' icon and trigger a frame.
-    await tester.tap(find.byIcon(Icons.add));
-    await tester.pump();
+    // Expect to see a loading indicator initially.
+    expect(find.byType(CircularProgressIndicator), findsOneWidget);
 
-    // Verify that our counter has incremented.
-    expect(find.text('0'), findsNothing);
-    expect(find.text('1'), findsOneWidget);
+    // Wait for the dashboard to finish loading.
+    await tester.pumpAndSettle(const Duration(seconds: 3));
+
+    // Expect to see the data table.
+    expect(find.byType(DataTable), findsOneWidget);
+
+    // Expect to not see the loading indicator anymore.
+    expect(find.byType(CircularProgressIndicator), findsNothing);
+
+    // Expect to see the title of the data table.
+    expect(find.text('Users'), findsOneWidget);
   });
 }
