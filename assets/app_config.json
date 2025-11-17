@@ -1,403 +1,397 @@
-
 {
   "settings": {
-    "id": "f0b7f4fa-d79a-4b04-b50e-19f1c0834ce3",
-    "name": "Name of application"
+      "id": "019a8f09-1119-7191-91a9-7cf6bb0c1e56",
+      "name": "Customer"
   },
   "entities": [
-    {
-      "id": "ab156e4d-d982-4b62-a45d-1644e53d07ab",
-      "name": "entity_simple",
-      "label": "Entity simple",
-      "columns": [
-        {
-          "id": "5b1e3c22-ef8d-462a-ae43-f0e19157677a",
-          "name": "field_a",
-          "label": "Field A",
-          "type": "string",
-          "encrypt": false
-        },
-        {
-          "id": "fd823768-c580-4bec-a397-0bcad1b0613c",
-          "name": "field_b",
-          "label": "Field B",
-          "type": "string",
-          "encrypt": true
-        },
-        {
-          "id": "d4ad1de7-7af9-4e60-ac50-646451c9f7d8",
-          "name": "field_c",
-          "label": "Field C",
-          "type": "numeric",
-          "encrypt": false
-        }
-      ]
-    },
-    {
-      "id": "b99ba879-8263-48d3-91af-491dfaa25d95",
-      "name": "entity_gender",
-      "label": "Gender",
-      "columns": [
-        {
-          "id": "13804c11-38a6-412a-8048-0f7d6b74d23e",
-          "name": "name",
-          "label": "Name",
-          "type": "string",
-          "encrypt": false
-        }
-      ]
-    },
-    {
-      "id": "21577b72-817b-4d20-ab4c-a40a3871f14a",
-      "name": "entity_person",
-      "label": "Person",
-      "columns": [
-        {
-          "id": "b662f71d-13ac-4904-adde-966fb958d2f7",
-          "name": "gender",
-          "label": "Gender",
-          "type": "many_to_one",
-          "encrypt": false,
-          "settings": {
-            "related_entity": "b99ba879-8263-48d3-91af-491dfaa25d95"
-          }
-        },
-        {
-          "id": "cb49c1ad-caee-4180-867c-2df3e4fcacc3",
-          "name": "first_name",
-          "label": "Firstname",
-          "type": "string",
-          "encrypt": true
-        },
-        {
-          "id": "12419fd6-7953-43c7-bcfe-03c5b67dbf92",
-          "name": "last_name",
-          "label": "Lastname",
-          "type": "string",
-          "encrypt": true
-        },
-        {
-          "id": "21577b72-817b-4d20-ab4c-a40a3871f14a",
-          "name": "email",
-          "label": "Email",
-          "type": "string",
-          "encrypt": true
-        }
-      ]
-    },
-    {
-      "id": "5c02c727-dcdb-4dd1-98ec-31d9327f26ec",
-      "name": "entity_product",
-      "label": "Product",
-      "columns": [
-        {
-          "id": "7f82ac32-1d52-4b81-8541-9f9a5ccb795c",
-          "name": "name",
-          "label": "Name",
-          "type": "string",
-          "encrypt": false
-        },
-        {
-          "id": "6d341032-f2bd-40e0-bbc7-2d130fa8156e",
-          "name": "price",
-          "label": "Price",
-          "type": "numeric",
-          "encrypt": false
-        }
-      ]
-    },
-    {
-      "id": "f7875ceb-422a-46a6-ad8a-149ce6021fb8",
-      "name": "entity_quote",
-      "label": "Quote",
-      "columns": [
-        {
-          "id": "b662f71d-13ac-4904-adde-966fb958d2f7",
-          "name": "person",
-          "label": "Person",
-          "type": "many_to_one",
-          "encrypt": false,
-          "settings": {
-            "related_entity": "b99ba879-8263-48d3-91af-491dfaa25d95"
-          }
-        },
-        {
-          "id": "ae3b15cb-b36b-44ac-bae5-4219bd877612",
-          "name": "products",
-          "label": "Products",
-          "type": "many_to_many",
-          "encrypt": false,
-          "settings": {
-            "columns_related_entity": [
+      {
+          "id": "019a8f06-0369-73fb-8fba-37872921c913",
+          "name": "CUSTOMER",
+          "label": "Customer",
+          "columns": [
               {
-                "id": "5c02c727-dcdb-4dd1-98ec-31d9327f26ec",
-                "name": "product",
-                "label": "Product",
-                "type": "many_to_one",
-                "encrypt": false,
-                "settings": {
-                  "related_entity": "b662f71d-13ac-4904-adde-966fb958d2f7"
-                }
+                  "id": "019a8f06-036b-73e4-a1f5-61f653fc22f4",
+                  "restName": "name",
+                  "name": "NAME",
+                  "label": "Name",
+                  "type": "string"
               },
               {
-                "id": "31901827-a320-4615-a0e5-a0d0f8f6995e",
-                "name": "price",
-                "label": "Price",
-                "type": "lookup",
-                "encrypt": false,
-                "settings": {
-                  "lookup_entity": "5c02c727-dcdb-4dd1-98ec-31d9327f26ec",
-                  "lookup_field": "6d341032-f2bd-40e0-bbc7-2d130fa8156e"
-                }
+                  "id": "019a8f06-036b-73e4-a1f5-61f6541b669c",
+                  "restName": "website",
+                  "name": "WEBSITE",
+                  "label": "Website",
+                  "type": "string"
               },
               {
-                "id": "67b9eb72-0e20-4dd3-9684-1608504c5e00",
-                "name": "sum_product",
-                "label": "Sum product",
-                "type": "calculatedValue",
-                "encrypt": false,
-                "settings": {
-                  "expression": "row.price * row.amount"
-                }
-              }
-            ],
-            "columns_relation": [
+                  "id": "019a8f06-036c-7327-8d56-3538c0a25ffa",
+                  "restName": "houseNumber",
+                  "name": "HOUSE_NUMBER",
+                  "label": "House number",
+                  "type": "string"
+              },
               {
-                "id": "67b9eb72-0e20-4dd3-9684-1608504c5e00",
-                "name": "amount",
-                "label": "Amount",
-                "type": "numeric",
-                "encrypt": false,
-                "settings": {}
+                  "id": "019a8f06-036c-7327-8d56-3538c145741e",
+                  "restName": "city",
+                  "name": "CITY",
+                  "label": "City",
+                  "type": "string"
+              },
+              {
+                  "id": "019a8f06-036c-7327-8d56-3538c1f7ebc4",
+                  "restName": "stateOrProvince",
+                  "name": "STATE_OR_PROVINCE",
+                  "label": "State or province",
+                  "type": "string"
+              },
+              {
+                  "id": "019a8f06-036c-7327-8d56-3538c26cd395",
+                  "restName": "postalCode",
+                  "name": "POSTAL_CODE",
+                  "label": "Postal code",
+                  "type": "string"
+              },
+              {
+                  "id": "019a8f06-036c-7327-8d56-3538c3421293",
+                  "restName": "country",
+                  "name": "COUNTRY",
+                  "label": "Country",
+                  "type": "string"
               }
-            ]
-          }
-        }
-      ]
-    }
+          ]
+      },
+      {
+          "id": "019a8f06-0369-73fb-8fba-37872921c913",
+          "name": "CUSTOMER",
+          "label": "Customer",
+          "columns": [
+              {
+                  "id": "019a8f06-036b-73e4-a1f5-61f653fc22f4",
+                  "restName": "name",
+                  "name": "NAME",
+                  "label": "Name",
+                  "type": "string"
+              },
+              {
+                  "id": "019a8f06-036b-73e4-a1f5-61f6541b669c",
+                  "restName": "website",
+                  "name": "WEBSITE",
+                  "label": "Website",
+                  "type": "string"
+              },
+              {
+                  "id": "019a8f06-036c-7327-8d56-3538c0a25ffa",
+                  "restName": "houseNumber",
+                  "name": "HOUSE_NUMBER",
+                  "label": "House number",
+                  "type": "string"
+              },
+              {
+                  "id": "019a8f06-036c-7327-8d56-3538c145741e",
+                  "restName": "city",
+                  "name": "CITY",
+                  "label": "City",
+                  "type": "string"
+              },
+              {
+                  "id": "019a8f06-036c-7327-8d56-3538c1f7ebc4",
+                  "restName": "stateOrProvince",
+                  "name": "STATE_OR_PROVINCE",
+                  "label": "State or province",
+                  "type": "string"
+              },
+              {
+                  "id": "019a8f06-036c-7327-8d56-3538c26cd395",
+                  "restName": "postalCode",
+                  "name": "POSTAL_CODE",
+                  "label": "Postal code",
+                  "type": "string"
+              },
+              {
+                  "id": "019a8f06-036c-7327-8d56-3538c3421293",
+                  "restName": "country",
+                  "name": "COUNTRY",
+                  "label": "Country",
+                  "type": "string"
+              },
+              {
+                  "id": "019a8f06-036b-73e4-a1f5-61f653fc22f4",
+                  "restName": "name",
+                  "name": "NAME",
+                  "label": "Name",
+                  "type": "string"
+              },
+              {
+                  "id": "019a8f06-036b-73e4-a1f5-61f6541b669c",
+                  "restName": "website",
+                  "name": "WEBSITE",
+                  "label": "Website",
+                  "type": "string"
+              },
+              {
+                  "id": "019a8f06-036c-7327-8d56-3538c0a25ffa",
+                  "restName": "houseNumber",
+                  "name": "HOUSE_NUMBER",
+                  "label": "House number",
+                  "type": "string"
+              },
+              {
+                  "id": "019a8f06-036c-7327-8d56-3538c145741e",
+                  "restName": "city",
+                  "name": "CITY",
+                  "label": "City",
+                  "type": "string"
+              },
+              {
+                  "id": "019a8f06-036c-7327-8d56-3538c1f7ebc4",
+                  "restName": "stateOrProvince",
+                  "name": "STATE_OR_PROVINCE",
+                  "label": "State or province",
+                  "type": "string"
+              },
+              {
+                  "id": "019a8f06-036c-7327-8d56-3538c26cd395",
+                  "restName": "postalCode",
+                  "name": "POSTAL_CODE",
+                  "label": "Postal code",
+                  "type": "string"
+              },
+              {
+                  "id": "019a8f06-036c-7327-8d56-3538c3421293",
+                  "restName": "country",
+                  "name": "COUNTRY",
+                  "label": "Country",
+                  "type": "string"
+              }
+          ]
+      }
   ],
-  "roles": [
-    {
-      "id": "74d30791-29aa-4422-bc6d-438f95b2f100",
-      "label": "Manager"
-    },
-    {
-      "id": "e8a9c9b6-028c-4bfb-a3c3-f83808ae81a6",
-      "label": "Employee"
-    }
+  "grids": [
+      {
+          "id": "019a8f06-0370-7353-b429-166d190410bf",
+          "type": "grid",
+          "name": "Customers",
+          "formNew": "019a8f06-036d-7089-99a5-2e006fd0490e",
+          "formEdit": "019a8f06-036f-7088-b818-e8bde7d8ac95",
+          "entity": "019a8f06-0369-73fb-8fba-37872921c913",
+          "columns": [
+              {
+                  "id": "019a8f06-0371-7165-8741-5d5e257db499",
+                  "label": "Name",
+                  "column": "019a8f06-036b-73e4-a1f5-61f653fc22f4"
+              },
+              {
+                  "id": "019a8f06-0371-7165-8741-5d5e26770cf7",
+                  "label": "Website",
+                  "column": "019a8f06-036b-73e4-a1f5-61f6541b669c"
+              },
+              {
+                  "id": "019a8f06-0372-721d-b19e-379139798a9c",
+                  "label": "Address",
+                  "column": "019a8f06-036c-7327-8d56-3538c0a25ffa"
+              },
+              {
+                  "id": "019a8f06-0372-721d-b19e-37913987f937",
+                  "label": "City",
+                  "column": "019a8f06-036c-7327-8d56-3538c145741e"
+              },
+              {
+                  "id": "019a8f06-0372-721d-b19e-3791399ae6f5",
+                  "label": "State",
+                  "column": "019a8f06-036c-7327-8d56-3538c1f7ebc4"
+              },
+              {
+                  "id": "019a8f06-0372-721d-b19e-379139ab9962",
+                  "label": "Zipcode",
+                  "column": "019a8f06-036c-7327-8d56-3538c26cd395"
+              },
+              {
+                  "id": "019a8f06-0372-721d-b19e-379139da483f",
+                  "label": "Country",
+                  "column": "019a8f06-036c-7327-8d56-3538c3421293"
+              }
+          ],
+          "rest": {
+              "list": "https://organiseyou.ddev.site/api/019a8f06-0369-73fb-8fba-37872921c913/records",
+              "create": "https://organiseyou.ddev.site/api/019a8f06-0369-73fb-8fba-37872921c913/record"
+          }
+      },
+      {
+          "id": "019a8f06-0371-7165-8741-5d5e24934863",
+          "type": "grid",
+          "name": "Customers (NL)",
+          "formNew": null,
+          "formEdit": null,
+          "entity": "019a8f06-0369-73fb-8fba-37872921c913",
+          "columns": [
+              {
+                  "id": "019a8f06-0373-7221-92ad-ff28a210cf46",
+                  "label": "Name",
+                  "column": "019a8f06-036b-73e4-a1f5-61f653fc22f4"
+              },
+              {
+                  "id": "019a8f06-0373-7221-92ad-ff28a2e65ba3",
+                  "label": "Website",
+                  "column": "019a8f06-036b-73e4-a1f5-61f6541b669c"
+              },
+              {
+                  "id": "019a8f06-0373-7221-92ad-ff28a3b04248",
+                  "label": "Address",
+                  "column": "019a8f06-036c-7327-8d56-3538c0a25ffa"
+              },
+              {
+                  "id": "019a8f06-0373-7221-92ad-ff28a46d42e3",
+                  "label": "City",
+                  "column": "019a8f06-036c-7327-8d56-3538c145741e"
+              },
+              {
+                  "id": "019a8f06-0373-7221-92ad-ff28a5285a7f",
+                  "label": "State",
+                  "column": "019a8f06-036c-7327-8d56-3538c1f7ebc4"
+              },
+              {
+                  "id": "019a8f06-0373-7221-92ad-ff28a5ea24ae",
+                  "label": "Zipcode",
+                  "column": "019a8f06-036c-7327-8d56-3538c26cd395"
+              },
+              {
+                  "id": "019a8f06-0374-7252-97e6-4f174589737a",
+                  "label": "Country",
+                  "column": "019a8f06-036c-7327-8d56-3538c3421293"
+              }
+          ],
+          "rest": {
+              "list": "https://organiseyou.ddev.site/api/019a8f06-0369-73fb-8fba-37872921c913/records",
+              "create": "https://organiseyou.ddev.site/api/019a8f06-0369-73fb-8fba-37872921c913/record"
+          }
+      }
   ],
-  "grid": [
-    {
-      "id": "dcc5fec5-6460-4668-95fc-87e7d60674b5",
-      "type": "form",
-      "name": "Person form",
-      "location": "Sidemenu>Group>New person",
-      "entity": "21577b72-817b-4d20-ab4c-a40a3871f14a",
-      "fields": [
-        {
-          "id": "f54c0d0c-ffa9-4d18-a3fa-af6fb9d5300f",
-          "type_group": "layout_element",
-          "type": "text",
-          "value": "Title of form"
-        },
-        {
-          "id": "dfbf02a9-5b3e-4be9-8226-bd54c16b3b87",
-          "type_group": "layout_element",
-          "type": "wysiwyg",
-          "value": "<p>Small description</p>"
-        },
-        {
-          "id": "6bcc0bd1-6315-431c-8d85-83d3d7f37961",
-          "type_group": "data_element",
-          "type": "many_to_on",
-          "name": "gender",
-          "label": "Gender",
-          "is_required": false,
-          "column": "b662f71d-13ac-4904-adde-966fb958d2f7",
-          "settings": {
-            "visible_column": "13804c11-38a6-412a-8048-0f7d6b74d23e"
-          }
-        },
-        {
-          "id": "0e0d9577-dc3d-4e4a-ab04-540df138f2a8",
-          "type_group": "data_element",
-          "type": "text",
-          "name": "first_name",
-          "label": "Firstname",
-          "is_required": true,
-          "column": "cb49c1ad-caee-4180-867c-2df3e4fcacc3",
-          "settings": {
-            "validators": [
+  "forms": [
+      {
+          "id": "019a8f06-036d-7089-99a5-2e006fd0490e",
+          "label": "New customer",
+          "entity": "019a8f06-0369-73fb-8fba-37872921c913",
+          "fields": [
               {
-                "type": "not_blank"
-              }
-            ]
-          }
-        },
-        {
-          "id": "f7b2780a-384c-4f23-ade5-695aaf09216a",
-          "type_group": "data_element",
-          "type": "text",
-          "name": "last_name",
-          "label": "Lastname",
-          "is_required": true,
-          "column": "12419fd6-7953-43c7-bcfe-03c5b67dbf92",
-          "settings": {
-            "validators": [
-              {
-                "type": "not_blank"
-              }
-            ]
-          }
-        },
-        {
-          "id": "f7b2780a-384c-4f23-ade5-695aaf09216b",
-          "type_group": "data_element",
-          "type": "text",
-          "name": "email",
-          "label": "E-mail",
-          "is_required": true,
-          "column": "21577b72-817b-4d20-ab4c-a40a3871f14a",
-          "settings": {
-            "validators": [
-              {
-                "type": "email"
-              }
-            ]
-          }
-        },
-        {
-          "id": "bb174b12-3641-4770-883e-a6ca7ef45edb",
-          "type_group": "layout_element",
-          "type": "sumbit",
-          "value": "Send"
-        }
-      ]
-    },
-    {
-      "id": "1838d581-4399-42d0-9afa-025538e4f9fe",
-      "type": "grid",
-      "name": "Person overview",
-      "location": "Sidemenu>Group>Person",
-      "form_new": "dcc5fec5-6460-4668-95fc-87e7d60674b5",
-      "form_edit": "dcc5fec5-6460-4668-95fc-87e7d60674b5",
-      "entity": "21577b72-817b-4d20-ab4c-a40a3871f14a",
-      "fields": [],
-      "columns": [
-        {
-          "id": "aaeb0a9f-08a2-4d1b-88c1-b803ceeb0388",
-          "label": "Gender",
-          "column": "b662f71d-13ac-4904-adde-966fb958d2f7",
-          "settings": {
-            "show_column": "13804c11-38a6-412a-8048-0f7d6b74d23e"
-          }
-        },
-        {
-          "id": "c5745300-241d-4ead-afb0-2d21d61caa66",
-          "label": "First name",
-          "column": "cb49c1ad-caee-4180-867c-2df3e4fcacc3",
-          "settings": {}
-        },
-        {
-          "id": "7c7e2b43-b891-4b6c-9cc6-2343b6fedf40",
-          "label": "Last name",
-          "column": "12419fd6-7953-43c7-bcfe-03c5b67dbf92",
-          "settings": {}
-        }
-      ],
-      "sort_column": "12419fd6-7953-43c7-bcfe-03c5b67dbf92",
-      "sort_order": "ASC"
-    },
-    {
-      "id": "492ac6de-9acd-42a4-839c-8c4bde7a9eca",
-      "type": "form",
-      "name": "Create quote form",
-      "location": "Sidemenu>Group>New quote",
-      "entity": "f7875ceb-422a-46a6-ad8a-149ce6021fb8",
-      "fields": [
-        {
-          "id": "f54c0d0c-ffa9-4d18-a3fa-af6fb9d5300f",
-          "type_group": "layout_element",
-          "type": "text",
-          "value": "Create a new quote"
-        },
-        {
-          "id": "dfbf02a9-5b3e-4be9-8226-bd54c16b3b87",
-          "type_group": "layout_element",
-          "type": "wysiwyg",
-          "value": "<p>This is an example with a many 2 many relation</p>"
-        },
-        {
-          "id": "6bcc0bd1-6315-431c-8d85-83d3d7f37961",
-          "type_group": "data_element",
-          "type": "many_to_on",
-          "name": "person",
-          "label": "Person",
-          "is_required": true,
-          "column": "b662f71d-13ac-4904-adde-966fb958d2f7",
-          "settings": {
-            "visible_column": "cb49c1ad-caee-4180-867c-2df3e4fcacc3"
-          }
-        },
-        {
-          "id": "0e0d9577-dc3d-4e4a-ab04-540df138f2a8",
-          "type_group": "data_element",
-          "type": "many_to_many",
-          "name": "products",
-          "label": "Products",
-          "is_required": false,
-          "column": "ae3b15cb-b36b-44ac-bae5-4219bd877612",
-          "settings": {
-            "grands": [
-              {
-                "use_column": "5850ceaf-22eb-4491-a2b7-1eb7de97886a",
-                "type_calculation": "SUM",
-                "label": "Total"
-              }
-            ],
-            "columns": [
-              {
-                "id": "33a201e-8b84-41f7-bc3f-636de152f239",
-                "label": "Product",
-                "column": "5c02c727-dcdb-4dd1-98ec-31d9327f26ec",
-                "display_type": "dropdown",
-                "settings": {}
+                  "id": "019a8f06-036d-7089-99a5-2e006fe72e1e",
+                  "type": "text",
+                  "name": "NAME",
+                  "label": "Name",
+                  "isRequired": true,
+                  "restName": "name"
               },
               {
-                "id": "ddf164cd-19f1-4e78-bec6-ffb3659e9027",
-                "label": "Price",
-                "column": "5c02c727-dcdb-4dd1-98ec-31d9327f26ec",
-                "display_type": "render_number_format",
-                "settings": {
-                  "decimals": 2,
-                  "pre_character": "E",
-                  "thousand_separator": "."
-                }
+                  "id": "019a8f06-036e-70d1-9bcf-25949147e4eb",
+                  "type": "text",
+                  "name": "WEBSITE",
+                  "label": "Website",
+                  "isRequired": false,
+                  "restName": "website"
               },
               {
-                "id": "18be658d-770f-4103-ad64-036bac63ae84",
-                "label": "Amount",
-                "column": "67b9eb72-0e20-4dd3-9684-1608504c5e00",
-                "display_type": "input_number",
-                "settings": {}
+                  "id": "019a8f06-036e-70d1-9bcf-2594919bbd92",
+                  "type": "text",
+                  "name": "HOUSE_NUMBER",
+                  "label": "Address",
+                  "isRequired": false,
+                  "restName": "houseNumber"
               },
               {
-                "id": "5850ceaf-22eb-4491-a2b7-1eb7de97886a",
-                "label": "Sum product",
-                "column": "67b9eb72-0e20-4dd3-9684-1608504c5e00",
-                "display_type": "render_value",
-                "settings": {}
+                  "id": "019a8f06-036e-70d1-9bcf-25949252a1e2",
+                  "type": "text",
+                  "name": "CITY",
+                  "label": "City",
+                  "isRequired": false,
+                  "restName": "city"
+              },
+              {
+                  "id": "019a8f06-036e-70d1-9bcf-25949340edc9",
+                  "type": "text",
+                  "name": "STATE_OR_PROVINCE",
+                  "label": "State",
+                  "isRequired": false,
+                  "restName": "stateOrProvince"
+              },
+              {
+                  "id": "019a8f06-036e-70d1-9bcf-2594940a7b17",
+                  "type": "text",
+                  "name": "POSTAL_CODE",
+                  "label": "Zipcode",
+                  "isRequired": false,
+                  "restName": "postalCode"
+              },
+              {
+                  "id": "019a8f06-036f-7088-b818-e8bde70ffc18",
+                  "type": "text",
+                  "name": "COUNTRY",
+                  "label": "Country",
+                  "isRequired": false,
+                  "restName": "country"
               }
-            ]
-          }
-        },
-        {
-          "id": "bb174b12-3641-4770-883e-a6ca7ef45edb",
-          "type_group": "layout_element",
-          "type": "sumbit",
-          "value": "Send"
-        }
-      ]
-    }
+          ]
+      },
+      {
+          "id": "019a8f06-036f-7088-b818-e8bde7d8ac95",
+          "label": "Edit customer",
+          "entity": "019a8f06-0369-73fb-8fba-37872921c913",
+          "fields": [
+              {
+                  "id": "019a8f06-036f-7088-b818-e8bde807f365",
+                  "type": "text",
+                  "name": "NAME",
+                  "label": "Name",
+                  "isRequired": false,
+                  "restName": "name"
+              },
+              {
+                  "id": "019a8f06-036f-7088-b818-e8bde866bc8e",
+                  "type": "text",
+                  "name": "WEBSITE",
+                  "label": "Website",
+                  "isRequired": false,
+                  "restName": "website"
+              },
+              {
+                  "id": "019a8f06-036f-7088-b818-e8bde8858529",
+                  "type": "text",
+                  "name": "HOUSE_NUMBER",
+                  "label": "Address",
+                  "isRequired": false,
+                  "restName": "houseNumber"
+              },
+              {
+                  "id": "019a8f06-036f-7088-b818-e8bde926cc45",
+                  "type": "text",
+                  "name": "CITY",
+                  "label": "City",
+                  "isRequired": false,
+                  "restName": "city"
+              },
+              {
+                  "id": "019a8f06-0370-7353-b429-166d17e5e973",
+                  "type": "text",
+                  "name": "STATE_OR_PROVINCE",
+                  "label": "State",
+                  "isRequired": false,
+                  "restName": "stateOrProvince"
+              },
+              {
+                  "id": "019a8f06-0370-7353-b429-166d180dad88",
+                  "type": "text",
+                  "name": "POSTAL_CODE",
+                  "label": "Zipcode",
+                  "isRequired": false,
+                  "restName": "postalCode"
+              },
+              {
+                  "id": "019a8f06-0370-7353-b429-166d18f97f55",
+                  "type": "text",
+                  "name": "COUNTRY",
+                  "label": "Country",
+                  "isRequired": false,
+                  "restName": "country"
+              }
+          ]
+      }
   ]
 }

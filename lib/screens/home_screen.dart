@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:collection/collection.dart';
 import '../auth_service.dart';
 import 'package:myapp/providers/app_provider.dart';
 import 'package:myapp/widgets/dynamic_form.dart';
@@ -62,7 +63,24 @@ class _HomeScreenState extends State<HomeScreen> {
               child: Text('Select an item from the menu'),
             );
           }
-          return DynamicForm(grid: provider.selectedGrid!);
+
+          // Find the form to be displayed. For now, we'll use the formNew if it exists.
+          final formId = provider.selectedGrid!.formNew;
+          if (formId == null) {
+            return const Center(
+              child: Text('No new form defined for this grid.'),
+            );
+          }
+
+          final form = provider.appConfig!.forms.firstWhereOrNull((f) => f.id == formId);
+
+          if (form == null) {
+            return const Center(
+              child: Text('Form not found.'),
+            );
+          }
+
+          return DynamicForm(form: form);
         },
       ),
     );

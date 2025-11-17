@@ -17,7 +17,7 @@ class SideMenu extends StatelessWidget {
             child: Text('Menu'),
           ),
           if (appConfig != null)
-            ...appConfig.grid.map((grid) {
+            ...appConfig.grids.map((grid) {
               return ListTile(
                 title: Text(grid.name),
                 onTap: () {
@@ -25,7 +25,7 @@ class SideMenu extends StatelessWidget {
                   Navigator.of(context).pop();
                 },
               );
-            }).toList(),
+            }),
           const Divider(),
           if (appProvider.dashboards.length > 1)
             ListTile(
