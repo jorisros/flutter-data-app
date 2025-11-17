@@ -12,22 +12,21 @@ class DashboardSelectionScreen extends StatelessWidget {
       appBar: AppBar(title: const Text('Select a Dashboard')),
       body: Consumer<DashboardProvider>(
         builder: (context, dashboardProvider, child) {
-          if (dashboardProvider.dashboards == null) {
+          final dashboards = dashboardProvider.dashboards;
+          if (dashboards == null) {
             return const Center(child: CircularProgressIndicator());
           }
           return ListView.builder(
-            itemCount: dashboardProvider.dashboards!.length,
+            itemCount: dashboards.length,
             itemBuilder: (context, index) {
-              final dashboard = dashboardProvider.dashboards![index];
+              final dashboard = dashboards[index];
               return ListTile(
-                title: Text(dashboard['settings']['name']),
+                title: Text(dashboard['settings']['name'] ?? 'Unnamed Dashboard'),
                 onTap: () {
                   dashboardProvider.selectDashboard(dashboard);
                   Navigator.pushReplacement(
                     context,
-                    MaterialPageRoute(
-                      builder: (context) => const HomeScreen(),
-                    ),
+                    MaterialPageRoute(builder: (context) => const HomeScreen()),
                   );
                 },
               );

@@ -40,9 +40,13 @@ class MyApp extends StatelessWidget {
 
     final TextTheme appTextTheme = TextTheme(
       displayLarge: GoogleFonts.plusJakartaSans(
-          fontSize: 57, fontWeight: FontWeight.bold),
+        fontSize: 57,
+        fontWeight: FontWeight.bold,
+      ),
       titleLarge: GoogleFonts.plusJakartaSans(
-          fontSize: 22, fontWeight: FontWeight.w500),
+        fontSize: 22,
+        fontWeight: FontWeight.w500,
+      ),
       bodyMedium: GoogleFonts.plusJakartaSans(fontSize: 14),
     );
 
@@ -57,17 +61,21 @@ class MyApp extends StatelessWidget {
         backgroundColor: primarySeedColor,
         foregroundColor: Colors.white,
         titleTextStyle: GoogleFonts.plusJakartaSans(
-            fontSize: 24, fontWeight: FontWeight.bold, color: Colors.white),
+          fontSize: 24,
+          fontWeight: FontWeight.bold,
+          color: Colors.white,
+        ),
       ),
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
           foregroundColor: Colors.white,
           backgroundColor: primarySeedColor,
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
           padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
           textStyle: GoogleFonts.plusJakartaSans(
-              fontSize: 16, fontWeight: FontWeight.w500),
+            fontSize: 16,
+            fontWeight: FontWeight.w500,
+          ),
         ),
       ),
     );
@@ -83,17 +91,21 @@ class MyApp extends StatelessWidget {
         backgroundColor: Colors.grey[900],
         foregroundColor: Colors.white,
         titleTextStyle: GoogleFonts.plusJakartaSans(
-            fontSize: 24, fontWeight: FontWeight.bold, color: Colors.white),
+          fontSize: 24,
+          fontWeight: FontWeight.bold,
+          color: Colors.white,
+        ),
       ),
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
           foregroundColor: Colors.black,
           backgroundColor: const Color(0xFF699BFD),
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
           padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
           textStyle: GoogleFonts.plusJakartaSans(
-              fontSize: 16, fontWeight: FontWeight.w500),
+            fontSize: 16,
+            fontWeight: FontWeight.w500,
+          ),
         ),
       ),
     );

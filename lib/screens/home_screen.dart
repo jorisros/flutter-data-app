@@ -13,12 +13,34 @@ class HomeScreen extends StatelessWidget {
       drawer: const SideMenu(),
       body: Consumer<DashboardProvider>(
         builder: (context, dashboardProvider, child) {
-          if (dashboardProvider.selectedGrid == null) {
+          final grid = dashboardProvider.selectedGrid;
+
+          if (dashboardProvider.isLoading) {
+            return const Center(child: CircularProgressIndicator());
+          }
+
+          if (grid == null) {
             return const Center(
                 child: Text('Please select a grid from the side menu.'));
           }
-          return Center(
-            child: Text('Content for ${dashboardProvider.selectedGrid!.name}'),
+
+          final gridData = dashboardProvider.gridData;
+
+          return SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: DataTable(
+              columns: grid.columns.map((column) {
+                return DataColumn(label: Text(column.label));
+              }).toList(),
+              rows: gridData?.map((row) {
+                    return DataRow(
+                      cells: grid.columns.map((column) {
+                        return DataCell(Text(row[column.field]?.toString() ?? ''));
+                      }).toList(),
+                    );
+                  }).toList() ??
+                  [],
+            ),
           );
         },
       ),
