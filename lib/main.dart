@@ -47,7 +47,8 @@ class MyApp extends StatelessWidget {
       appBarTheme: AppBarTheme(
         backgroundColor: primarySeedColor,
         foregroundColor: Colors.white,
-        titleTextStyle: GoogleFonts.plusJakartaSans(fontSize: 24, fontWeight: FontWeight.bold),
+        titleTextStyle: GoogleFonts.plusJakartaSans(
+            fontSize: 24, fontWeight: FontWeight.bold, color: Colors.white),
       ),
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
@@ -70,7 +71,8 @@ class MyApp extends StatelessWidget {
       appBarTheme: AppBarTheme(
         backgroundColor: Colors.grey[900],
         foregroundColor: Colors.white,
-        titleTextStyle: GoogleFonts.plusJakartaSans(fontSize: 24, fontWeight: FontWeight.bold),
+        titleTextStyle: GoogleFonts.plusJakartaSans(
+            fontSize: 24, fontWeight: FontWeight.bold, color: Colors.white),
       ),
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
