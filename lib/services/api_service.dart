@@ -20,7 +20,7 @@ class ApiService {
     }
 
     final response = await http.get(
-      Uri.parse('$backendUrl/dashboard'),
+      Uri.parse('$backendUrl/dashboards'),
       headers: {'Authorization': 'Bearer $token'},
     );
 
@@ -41,7 +41,7 @@ class ApiService {
     }
 
     final response = await http.get(
-      Uri.parse('$backendUrl/api/dashboard/$dashboardId'),
+      Uri.parse('$backendUrl/dashboard/$dashboardId'),
       headers: {'Authorization': 'Bearer $token'},
     );
 

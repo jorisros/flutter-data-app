@@ -11,19 +11,19 @@ AppConfig _$AppConfigFromJson(Map<String, dynamic> json) => AppConfig(
   entities: (json['entities'] as List<dynamic>)
       .map((e) => Entity.fromJson(e as Map<String, dynamic>))
       .toList(),
-  roles: (json['roles'] as List<dynamic>)
-      .map((e) => Role.fromJson(e as Map<String, dynamic>))
-      .toList(),
-  grid: (json['grid'] as List<dynamic>)
+  grids: (json['grids'] as List<dynamic>)
       .map((e) => Grid.fromJson(e as Map<String, dynamic>))
+      .toList(),
+  forms: (json['forms'] as List<dynamic>)
+      .map((e) => Form.fromJson(e as Map<String, dynamic>))
       .toList(),
 );
 
 Map<String, dynamic> _$AppConfigToJson(AppConfig instance) => <String, dynamic>{
   'settings': instance.settings,
   'entities': instance.entities,
-  'roles': instance.roles,
-  'grid': instance.grid,
+  'grids': instance.grids,
+  'forms': instance.forms,
 };
 
 AppSettings _$AppSettingsFromJson(Map<String, dynamic> json) =>
@@ -53,10 +53,7 @@ Column _$ColumnFromJson(Map<String, dynamic> json) => Column(
   name: json['name'] as String,
   label: json['label'] as String,
   type: json['type'] as String,
-  encrypt: json['encrypt'] as bool,
-  settings: json['settings'] == null
-      ? null
-      : ColumnSettings.fromJson(json['settings'] as Map<String, dynamic>),
+  restName: json['restName'] as String,
 );
 
 Map<String, dynamic> _$ColumnToJson(Column instance) => <String, dynamic>{
@@ -64,87 +61,84 @@ Map<String, dynamic> _$ColumnToJson(Column instance) => <String, dynamic>{
   'name': instance.name,
   'label': instance.label,
   'type': instance.type,
-  'encrypt': instance.encrypt,
-  'settings': instance.settings,
-};
-
-ColumnSettings _$ColumnSettingsFromJson(Map<String, dynamic> json) =>
-    ColumnSettings(relatedEntity: json['related_entity'] as String?);
-
-Map<String, dynamic> _$ColumnSettingsToJson(ColumnSettings instance) =>
-    <String, dynamic>{'related_entity': instance.relatedEntity};
-
-Role _$RoleFromJson(Map<String, dynamic> json) =>
-    Role(id: json['id'] as String, label: json['label'] as String);
-
-Map<String, dynamic> _$RoleToJson(Role instance) => <String, dynamic>{
-  'id': instance.id,
-  'label': instance.label,
+  'restName': instance.restName,
 };
 
 Grid _$GridFromJson(Map<String, dynamic> json) => Grid(
   id: json['id'] as String,
   type: json['type'] as String,
   name: json['name'] as String,
-  location: json['location'] as String,
   entity: json['entity'] as String,
-  fields: (json['fields'] as List<dynamic>?)
-      ?.map((e) => Field.fromJson(e as Map<String, dynamic>))
+  columns: (json['columns'] as List<dynamic>)
+      .map((e) => GridColumn.fromJson(e as Map<String, dynamic>))
       .toList(),
+  formNew: json['formNew'] as String?,
+  formEdit: json['formEdit'] as String?,
+  rest: Rest.fromJson(json['rest'] as Map<String, dynamic>),
 );
 
 Map<String, dynamic> _$GridToJson(Grid instance) => <String, dynamic>{
   'id': instance.id,
   'type': instance.type,
   'name': instance.name,
-  'location': instance.location,
+  'entity': instance.entity,
+  'columns': instance.columns,
+  'formNew': instance.formNew,
+  'formEdit': instance.formEdit,
+  'rest': instance.rest,
+};
+
+GridColumn _$GridColumnFromJson(Map<String, dynamic> json) => GridColumn(
+  id: json['id'] as String,
+  label: json['label'] as String,
+  column: json['column'] as String,
+);
+
+Map<String, dynamic> _$GridColumnToJson(GridColumn instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'label': instance.label,
+      'column': instance.column,
+    };
+
+Rest _$RestFromJson(Map<String, dynamic> json) =>
+    Rest(list: json['list'] as String, create: json['create'] as String);
+
+Map<String, dynamic> _$RestToJson(Rest instance) => <String, dynamic>{
+  'list': instance.list,
+  'create': instance.create,
+};
+
+Form _$FormFromJson(Map<String, dynamic> json) => Form(
+  id: json['id'] as String,
+  label: json['label'] as String,
+  entity: json['entity'] as String,
+  fields: (json['fields'] as List<dynamic>)
+      .map((e) => FormField.fromJson(e as Map<String, dynamic>))
+      .toList(),
+);
+
+Map<String, dynamic> _$FormToJson(Form instance) => <String, dynamic>{
+  'id': instance.id,
+  'label': instance.label,
   'entity': instance.entity,
   'fields': instance.fields,
 };
 
-Field _$FieldFromJson(Map<String, dynamic> json) => Field(
+FormField _$FormFieldFromJson(Map<String, dynamic> json) => FormField(
   id: json['id'] as String,
-  typeGroup: json['type_group'] as String,
   type: json['type'] as String,
-  value: json['value'] as String?,
-  name: json['name'] as String?,
-  label: json['label'] as String?,
-  isRequired: json['is_required'] as bool?,
-  column: json['column'] as String?,
-  settings: json['settings'] == null
-      ? null
-      : FieldSettings.fromJson(json['settings'] as Map<String, dynamic>),
+  name: json['name'] as String,
+  label: json['label'] as String,
+  isRequired: json['isRequired'] as bool,
+  restName: json['restName'] as String,
 );
 
-Map<String, dynamic> _$FieldToJson(Field instance) => <String, dynamic>{
+Map<String, dynamic> _$FormFieldToJson(FormField instance) => <String, dynamic>{
   'id': instance.id,
-  'type_group': instance.typeGroup,
   'type': instance.type,
-  'value': instance.value,
   'name': instance.name,
   'label': instance.label,
-  'is_required': instance.isRequired,
-  'column': instance.column,
-  'settings': instance.settings,
-};
-
-FieldSettings _$FieldSettingsFromJson(Map<String, dynamic> json) =>
-    FieldSettings(
-      visibleColumn: json['visible_column'] as String?,
-      validators: (json['validators'] as List<dynamic>?)
-          ?.map((e) => Validator.fromJson(e as Map<String, dynamic>))
-          .toList(),
-    );
-
-Map<String, dynamic> _$FieldSettingsToJson(FieldSettings instance) =>
-    <String, dynamic>{
-      'visible_column': instance.visibleColumn,
-      'validators': instance.validators,
-    };
-
-Validator _$ValidatorFromJson(Map<String, dynamic> json) =>
-    Validator(type: json['type'] as String);
-
-Map<String, dynamic> _$ValidatorToJson(Validator instance) => <String, dynamic>{
-  'type': instance.type,
+  'isRequired': instance.isRequired,
+  'restName': instance.restName,
 };
