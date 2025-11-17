@@ -37,10 +37,26 @@ class DashboardProvider with ChangeNotifier {
     }
   }
 
-  // This is now a synchronous method for instant state updates
   void selectDashboard(Map<String, dynamic> dashboardData) {
-    _selectedDashboard = Dashboard.fromJson(dashboardData);
-    
+    final dashboard = Dashboard.fromJson(dashboardData);
+
+    // Create a lookup map for entity columns
+    final entityColumnMap = <String, String>{};
+    for (var entity in dashboard.entities) {
+      for (var column in entity.columns) {
+        entityColumnMap[column.id] = column.restName;
+      }
+    }
+
+    // Denormalize the grid columns
+    for (var grid in dashboard.grids) {
+      for (var column in grid.columns) {
+        column.field = entityColumnMap[column.columnId] ?? '';
+      }
+    }
+
+    _selectedDashboard = dashboard;
+
     // Notify listeners immediately so the UI can rebuild with the selected dashboard
     notifyListeners();
 

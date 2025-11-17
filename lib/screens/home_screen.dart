@@ -24,23 +24,9 @@ class HomeScreen extends StatelessWidget {
                 child: Text('Please select a grid from the side menu.'));
           }
 
-          final gridData = dashboardProvider.gridData;
-
-          return SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            child: DataTable(
-              columns: grid.columns.map((column) {
-                return DataColumn(label: Text(column.label));
-              }).toList(),
-              rows: gridData?.map((row) {
-                    return DataRow(
-                      cells: grid.columns.map((column) {
-                        return DataCell(Text(row[column.field]?.toString() ?? ''));
-                      }).toList(),
-                    );
-                  }).toList() ??
-                  [],
-            ),
+          // Temporarily simplified view
+          return const Center(
+            child: Text('Table will be implemented here in the future.'),
           );
         },
       ),

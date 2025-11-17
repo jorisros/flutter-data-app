@@ -10,25 +10,39 @@ Dashboard _$DashboardFromJson(Map<String, dynamic> json) => Dashboard(
   settings: DashboardSettings.fromJson(
     json['settings'] as Map<String, dynamic>,
   ),
-  grids: (json['grids'] as List<dynamic>)
-      .map((e) => Grid.fromJson(e as Map<String, dynamic>))
-      .toList(),
+  entities:
+      (json['entities'] as List<dynamic>?)
+          ?.map((e) => Entity.fromJson(e as Map<String, dynamic>))
+          .toList() ??
+      [],
+  grids:
+      (json['grids'] as List<dynamic>?)
+          ?.map((e) => Grid.fromJson(e as Map<String, dynamic>))
+          .toList() ??
+      [],
 );
-
-Map<String, dynamic> _$DashboardToJson(Dashboard instance) => <String, dynamic>{
-  'settings': instance.settings,
-  'grids': instance.grids,
-};
 
 DashboardSettings _$DashboardSettingsFromJson(Map<String, dynamic> json) =>
     DashboardSettings(name: json['name'] as String);
 
-Map<String, dynamic> _$DashboardSettingsToJson(DashboardSettings instance) =>
-    <String, dynamic>{'name': instance.name};
+Entity _$EntityFromJson(Map<String, dynamic> json) => Entity(
+  id: json['id'] as String,
+  columns:
+      (json['columns'] as List<dynamic>?)
+          ?.map((e) => EntityColumn.fromJson(e as Map<String, dynamic>))
+          .toList() ??
+      [],
+);
+
+EntityColumn _$EntityColumnFromJson(Map<String, dynamic> json) => EntityColumn(
+  id: json['id'] as String,
+  restName: json['restName'] as String,
+);
 
 Grid _$GridFromJson(Map<String, dynamic> json) => Grid(
   id: json['id'] as String,
   name: json['name'] as String,
+  entity: json['entity'] as String,
   columns:
       (json['columns'] as List<dynamic>?)
           ?.map((e) => GridColumn.fromJson(e as Map<String, dynamic>))
@@ -36,14 +50,7 @@ Grid _$GridFromJson(Map<String, dynamic> json) => Grid(
       [],
 );
 
-Map<String, dynamic> _$GridToJson(Grid instance) => <String, dynamic>{
-  'id': instance.id,
-  'name': instance.name,
-  'columns': instance.columns,
-};
-
-GridColumn _$GridColumnFromJson(Map<String, dynamic> json) =>
-    GridColumn(field: json['field'] as String, label: json['label'] as String?);
-
-Map<String, dynamic> _$GridColumnToJson(GridColumn instance) =>
-    <String, dynamic>{'field': instance.field, 'label': instance.label};
+GridColumn _$GridColumnFromJson(Map<String, dynamic> json) => GridColumn(
+  columnId: json['column'] as String,
+  label: json['label'] as String?,
+);
