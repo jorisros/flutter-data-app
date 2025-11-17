@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:organiseyou/models/dashboard_service.dart';
+import 'package:organiseyou/providers/dashboard_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:organiseyou/auth/auth_gate.dart';
 import 'package:organiseyou/auth/auth_service.dart';
-import 'package:organiseyou/providers/app_provider.dart';
 import 'package:organiseyou/settings_service.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   final settingsService = SettingsService();
   final authService = AuthService(settingsService);
+  final dashboardService = DashboardService(authService);
   await authService.tryAutoLogin();
 
   runApp(
@@ -17,7 +19,12 @@ void main() async {
       providers: [
         Provider(create: (context) => settingsService),
         ChangeNotifierProvider(create: (context) => authService),
-        ChangeNotifierProvider(create: (context) => AppProvider()),
+        ChangeNotifierProxyProvider<AuthService, DashboardProvider>(
+          create: (context) =>
+              DashboardProvider(DashboardService(context.read<AuthService>())),
+          update: (context, auth, previous) =>
+              DashboardProvider(DashboardService(auth)),
+        ),
       ],
       child: const MyApp(),
     ),
@@ -32,8 +39,10 @@ class MyApp extends StatelessWidget {
     const Color primarySeedColor = Color(0xFF0D6EFD);
 
     final TextTheme appTextTheme = TextTheme(
-      displayLarge: GoogleFonts.plusJakartaSans(fontSize: 57, fontWeight: FontWeight.bold),
-      titleLarge: GoogleFonts.plusJakartaSans(fontSize: 22, fontWeight: FontWeight.w500),
+      displayLarge: GoogleFonts.plusJakartaSans(
+          fontSize: 57, fontWeight: FontWeight.bold),
+      titleLarge: GoogleFonts.plusJakartaSans(
+          fontSize: 22, fontWeight: FontWeight.w500),
       bodyMedium: GoogleFonts.plusJakartaSans(fontSize: 14),
     );
 
@@ -54,9 +63,11 @@ class MyApp extends StatelessWidget {
         style: ElevatedButton.styleFrom(
           foregroundColor: Colors.white,
           backgroundColor: primarySeedColor,
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
           padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-          textStyle: GoogleFonts.plusJakartaSans(fontSize: 16, fontWeight: FontWeight.w500),
+          textStyle: GoogleFonts.plusJakartaSans(
+              fontSize: 16, fontWeight: FontWeight.w500),
         ),
       ),
     );
@@ -78,9 +89,11 @@ class MyApp extends StatelessWidget {
         style: ElevatedButton.styleFrom(
           foregroundColor: Colors.black,
           backgroundColor: const Color(0xFF699BFD),
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
           padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-          textStyle: GoogleFonts.plusJakartaSans(fontSize: 16, fontWeight: FontWeight.w500),
+          textStyle: GoogleFonts.plusJakartaSans(
+              fontSize: 16, fontWeight: FontWeight.w500),
         ),
       ),
     );
