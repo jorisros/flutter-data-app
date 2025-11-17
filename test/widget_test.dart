@@ -4,15 +4,31 @@ import 'package:provider/provider.dart';
 import 'package:organiseyou/auth/auth_service.dart';
 import 'package:organiseyou/providers/app_provider.dart';
 import 'package:organiseyou/main.dart';
+import 'package:organiseyou/settings_service.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+class MockSettingsService extends SettingsService {
+  @override
+  Future<String> getBackendUrl() async {
+    return 'https://organiseyou.ddev.site/api';
+  }
+}
 
 void main() {
   testWidgets('Login and navigate to grid content', (WidgetTester tester) async {
-    // Build our app and trigger a frame.
+    SharedPreferences.setMockInitialValues({});
+    final settingsService = MockSettingsService();
+
     await tester.pumpWidget(
       MultiProvider(
         providers: [
-          ChangeNotifierProvider(create: (context) => AuthService()),
-          ChangeNotifierProvider(create: (context) => AppProvider()),
+          Provider<SettingsService>(create: (_) => settingsService),
+          ChangeNotifierProvider<AuthService>(
+            create: (_) => AuthService(settingsService),
+          ),
+          ChangeNotifierProvider<AppProvider>(
+            create: (_) => AppProvider(),
+          ),
         ],
         child: const MyApp(),
       ),
