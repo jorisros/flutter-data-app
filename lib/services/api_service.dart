@@ -4,6 +4,7 @@ import 'package:myapp/auth_service.dart';
 import 'package:myapp/models/app_config.dart';
 import 'package:myapp/models/dashboard.dart';
 import 'package:myapp/settings_service.dart';
+import 'dart:developer' as developer;
 
 class ApiService {
   final AuthService _authService;
@@ -19,17 +20,32 @@ class ApiService {
       return [];
     }
 
-    final response = await http.get(
-      Uri.parse('$backendUrl/dashboards'),
-      headers: {'Authorization': 'Bearer $token'},
-    );
+    final client = http.Client();
+    try {
+      final request = http.Request('GET', Uri.parse('$backendUrl/dashboards'));
+      request.headers['Authorization'] = 'Bearer $token';
+      request.followRedirects = false;
 
-    if (response.statusCode == 200) {
-      final List<dynamic> data = json.decode(response.body);
-      return data.map((json) => Dashboard.fromJson(json)).toList();
+      final streamedResponse = await client.send(request);
+
+      if (streamedResponse.statusCode >= 300 && streamedResponse.statusCode < 400) {
+        final location = streamedResponse.headers['location'];
+        developer.log('Backend sent a redirect to: $location while fetching dashboards.', name: 'api.service');
+        return [];
+      }
+
+      final response = await http.Response.fromStream(streamedResponse);
+      if (response.statusCode == 200) {
+        final List<dynamic> data = json.decode(response.body);
+        return data.map((json) => Dashboard.fromJson(json)).toList();
+      }
+      return [];
+    } catch (e, s) {
+      developer.log('Error in getDashboards', name: 'api.service', error: e, stackTrace: s);
+      return [];
+    } finally {
+      client.close();
     }
-
-    return [];
   }
 
   Future<AppConfig?> getDashboardConfig(String dashboardId) async {
@@ -40,16 +56,34 @@ class ApiService {
       return null;
     }
 
-    final response = await http.get(
-      Uri.parse('$backendUrl/dashboard/$dashboardId'),
-      headers: {'Authorization': 'Bearer $token'},
-    );
+    final client = http.Client();
+    try {
+      final request = http.Request(
+        'GET',
+        Uri.parse('$backendUrl/dashboard/$dashboardId'),
+      );
+      request.headers['Authorization'] = 'Bearer $token';
+      request.followRedirects = false;
 
-    if (response.statusCode == 200) {
-      return AppConfig.fromJson(json.decode(response.body));
+      final streamedResponse = await client.send(request);
+
+      if (streamedResponse.statusCode >= 300 && streamedResponse.statusCode < 400) {
+        final location = streamedResponse.headers['location'];
+        developer.log('Backend sent a redirect to: $location for dashboard $dashboardId', name: 'api.service');
+        return null;
+      }
+
+      final response = await http.Response.fromStream(streamedResponse);
+      if (response.statusCode == 200) {
+        return AppConfig.fromJson(json.decode(response.body));
+      }
+      return null;
+    } catch (e, s) {
+      developer.log('Error in getDashboardConfig', name: 'api.service', error: e, stackTrace: s);
+      return null;
+    } finally {
+      client.close();
     }
-
-    return null;
   }
 
   Future<AppConfig?> getAppConfig() async {
@@ -60,15 +94,30 @@ class ApiService {
       return null;
     }
 
-    final response = await http.get(
-      Uri.parse('$backendUrl/config'),
-      headers: {'Authorization': 'Bearer $token'},
-    );
+    final client = http.Client();
+    try {
+      final request = http.Request('GET', Uri.parse('$backendUrl/config'));
+      request.headers['Authorization'] = 'Bearer $token';
+      request.followRedirects = false;
 
-    if (response.statusCode == 200) {
-      return AppConfig.fromJson(json.decode(response.body));
+      final streamedResponse = await client.send(request);
+
+      if (streamedResponse.statusCode >= 300 && streamedResponse.statusCode < 400) {
+        final location = streamedResponse.headers['location'];
+        developer.log('Backend sent a redirect to: $location while fetching app config.', name: 'api.service');
+        return null;
+      }
+
+      final response = await http.Response.fromStream(streamedResponse);
+      if (response.statusCode == 200) {
+        return AppConfig.fromJson(json.decode(response.body));
+      }
+      return null;
+    } catch (e, s) {
+      developer.log('Error in getAppConfig', name: 'api.service', error: e, stackTrace: s);
+      return null;
+    } finally {
+      client.close();
     }
-
-    return null;
   }
 }
