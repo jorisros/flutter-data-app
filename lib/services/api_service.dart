@@ -61,7 +61,7 @@ class ApiService {
     }
 
     final response = await http.get(
-      Uri.parse('$backendUrl/api/config'),
+      Uri.parse('$backendUrl/config'),
       headers: {'Authorization': 'Bearer $token'},
     );
 
