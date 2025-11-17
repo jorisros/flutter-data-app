@@ -1,47 +1,30 @@
 import 'package:flutter/material.dart';
-import 'package:organiseyou/models/app_config.dart';
 import 'package:organiseyou/models/dashboard.dart';
-import 'package:organiseyou/services/api_service.dart';
+import 'package:organiseyou/models/grid.dart';
 
-class AppProvider with ChangeNotifier {
-  ApiService _apiService;
-
-  AppConfig? _appConfig;
-  AppConfig? get appConfig => _appConfig;
-
-  List<Dashboard> _dashboards = [];
-  List<Dashboard> get dashboards => _dashboards;
-
-  Dashboard? _selectedDashboard;
-  Dashboard? get selectedDashboard => _selectedDashboard;
-
+class AppProvider extends ChangeNotifier {
+  Dashboard? _dashboard;
   Grid? _selectedGrid;
+
+  Dashboard? get dashboard => _dashboard;
   Grid? get selectedGrid => _selectedGrid;
 
-  AppProvider(this._apiService);
-
-  void updateApiService(ApiService apiService) {
-    _apiService = apiService;
-  }
-
-  Future<void> loadDashboards() async {
-    _dashboards = await _apiService.getDashboards();
-    if (_dashboards.length == 1) {
-      await setSelectedDashboard(_dashboards.first);
-    } else {
-      _selectedDashboard = null;
-      _appConfig = null;
-    }
+  Future<void> getDashboards() async {
+    // In a real app, you'd have network requests and error handling here
+    await Future.delayed(const Duration(seconds: 1));
+    _dashboard = Dashboard(
+      id: '1',
+      name: 'My Dashboard',
+      grids: [
+        Grid(id: '1', name: 'Grid 1'),
+        Grid(id: '2', name: 'Grid 2'),
+        Grid(id: '3', name: 'Grid 3'),
+      ],
+    );
     notifyListeners();
   }
 
-  Future<void> setSelectedDashboard(Dashboard dashboard) async {
-    _selectedDashboard = dashboard;
-    _appConfig = await _apiService.getDashboardConfig(dashboard.id);
-    notifyListeners();
-  }
-
-  void setSelectedGrid(Grid grid) {
+  void selectGrid(Grid grid) {
     _selectedGrid = grid;
     notifyListeners();
   }

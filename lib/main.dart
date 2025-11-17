@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-import 'package:organiseyou/theme_provider.dart';
-import 'package:organiseyou/dashboard_provider.dart';
+import 'package:organiseyou/auth/auth_gate.dart';
+import 'package:organiseyou/auth/auth_service.dart';
+import 'package:organiseyou/providers/app_provider.dart';
 
 void main() {
   runApp(
     MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (context) => ThemeProvider()),
-        ChangeNotifierProvider(create: (context) => DashboardProvider()),
+        ChangeNotifierProvider(create: (context) => AuthService()),
+        ChangeNotifierProvider(create: (context) => AppProvider()),
       ],
       child: const MyApp(),
     ),
@@ -75,118 +76,11 @@ class MyApp extends StatelessWidget {
       ),
     );
 
-    return Consumer<ThemeProvider>(
-      builder: (context, themeProvider, child) {
-        return MaterialApp(
-          title: 'Organiseyou',
-          theme: lightTheme,
-          darkTheme: darkTheme,
-          themeMode: themeProvider.themeMode,
-          home: const DashboardScreen(),
-        );
-      },
-    );
-  }
-}
-
-class DashboardScreen extends StatefulWidget {
-  const DashboardScreen({super.key});
-
-  @override
-  State<DashboardScreen> createState() => _DashboardScreenState();
-}
-
-class _DashboardScreenState extends State<DashboardScreen> {
-  @override
-  void initState() {
-    super.initState();
-    Provider.of<DashboardProvider>(context, listen: false).fetchDashboard();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    final themeProvider = Provider.of<ThemeProvider>(context);
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Dashboard'),
-        actions: [
-          IconButton(
-            icon: Icon(themeProvider.themeMode == ThemeMode.dark ? Icons.light_mode : Icons.dark_mode),
-            onPressed: () => themeProvider.toggleTheme(),
-            tooltip: 'Toggle Theme',
-          ),
-          IconButton(
-            icon: const Icon(Icons.auto_mode),
-            onPressed: () => themeProvider.setSystemTheme(),
-            tooltip: 'Set System Theme',
-          ),
-        ],
-      ),
-      body: Consumer<DashboardProvider>(
-        builder: (context, dashboardProvider, child) {
-          if (dashboardProvider.isLoading) {
-            return const Center(child: CircularProgressIndicator());
-          }
-
-          if (dashboardProvider.error != null) {
-            return Center(child: Text('Error: ${dashboardProvider.error}'));
-          }
-
-          if (dashboardProvider.dashboard == null) {
-            return const Center(child: Text('No dashboard loaded'));
-          }
-
-          return ListView.builder(
-            itemCount: dashboardProvider.dashboard!.widgets.length,
-            itemBuilder: (context, index) {
-              final widgetData = dashboardProvider.dashboard!.widgets[index];
-              switch (widgetData.type) {
-                case 'dataTable':
-                  return DataTableWidget(data: widgetData.data);
-                default:
-                  return const SizedBox.shrink();
-              }
-            },
-          );
-        },
-      ),
-    );
-  }
-}
-
-class DataTableWidget extends StatelessWidget {
-  final Map<String, dynamic> data;
-
-  const DataTableWidget({super.key, required this.data});
-
-  @override
-  Widget build(BuildContext context) {
-    final title = data['title'] as String;
-    final columns = (data['columns'] as List).cast<String>();
-    final rows = (data['rows'] as List).map((row) => (row as List).cast<String>()).toList();
-
-    return Card(
-      margin: const EdgeInsets.all(16.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Text(title, style: Theme.of(context).textTheme.titleLarge),
-          ),
-          SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            child: DataTable(
-              columns: columns.map((col) => DataColumn(label: Text(col))).toList(),
-              rows: rows.map((row) {
-                return DataRow(
-                  cells: row.map((cell) => DataCell(Text(cell))).toList(),
-                );
-              }).toList(),
-            ),
-          ),
-        ],
-      ),
+    return MaterialApp(
+      title: 'Organiseyou',
+      theme: lightTheme,
+      darkTheme: darkTheme,
+      home: const AuthGate(),
     );
   }
 }

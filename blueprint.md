@@ -1,26 +1,37 @@
-# Organiseyou App Blueprint
+# Application Blueprint
 
 ## Overview
 
-A dynamic data-driven application that loads and renders dashboards from a backend. The UI is built dynamically based on the configuration received from a dashboard endpoint.
+This document outlines the plan to refactor the application to implement a login-based dashboard system. The user will first need to log in to access the application. Once authenticated, the user will be presented with a dashboard with a side menu for navigation.
 
-## Features
+## Plan
 
-*   **Dynamic UI:** The application will fetch a dashboard configuration from a backend and render the UI accordingly.
-*   **Data Tables:** It will be able to display data in tables.
-*   **Theme Toggle:** Users can switch between light and dark themes.
-*   **Modern UI:** A clean and intuitive user interface using Material Design 3.
+1.  **Authentication:**
+    *   Create a `lib/auth` directory.
+    *   Create a `lib/auth/auth_service.dart` to handle user authentication (login/logout).
+    *   Create a `lib/auth/auth_gate.dart` to manage the authentication state and redirect users accordingly.
 
-## Implemented
+2.  **Data Models:**
+    *   Create a `lib/models` directory.
+    *   Create a `lib/models/dashboard.dart` to represent the dashboard object.
+    *   Create a `lib/models/grid.dart` for the grid object.
 
-*   **Project Cleanup:**
-    *   Removed the existing todo-specific files (`todo.dart`, `todo_provider.dart`).
-*   **Add Dependencies:**
-    *   Added the `http` package for making network requests.
-*   **Data Modeling:**
-    *   Created models to represent the dynamic dashboard structure (e.g., `Dashboard`, `Widget`, `DataTable`).
-*   **Backend Integration:**
-    *   Created a `DashboardProvider` to fetch the dashboard configuration from a mocked backend endpoint.
-*   **UI Implementation:**
-    *   Created a `DashboardScreen` that dynamically builds widgets based on the fetched data.
-    *   Implemented a `DataTableWidget` to display tabular data.
+3.  **Providers:**
+    *   Create a `lib/providers` directory.
+    *   Create a `lib/providers/app_provider.dart` to manage the application state, including the selected dashboard and grid.
+
+4.  **Screens:**
+    *   Create a `lib/screens` directory.
+    *   Create a `lib/screens/login_screen.dart` for the user login UI.
+    *   Create a `lib:wq
+/screens/home_screen.dart` to display the main dashboard content.
+
+5.  **Widgets:**
+    *   Create a `lib/widgets` directory.
+    *   Create a `lib/widgets/side_menu.dart` to display the navigation with the list of grids.
+
+6.  **Main:**
+    *   Update `lib/main.dart` to use the `AuthGate` and the new providers.
+
+7.  **Testing:**
+    *   Update `test/widget_test.dart` to reflect the new application structure and functionality.
