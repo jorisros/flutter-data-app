@@ -33,22 +33,6 @@ class _HomeScreenState extends State<HomeScreen> {
       appBar: AppBar(
         title: Text(appProvider.appConfig?.settings.name ?? 'Dynamic App'),
         actions: [
-          if (appProvider.dashboards.length > 1)
-            DropdownButton<String>(
-              value: appProvider.selectedDashboard?.id,
-              onChanged: (String? newValue) {
-                if (newValue != null) {
-                  final dashboard = appProvider.dashboards.firstWhere((d) => d.id == newValue);
-                  appProvider.setSelectedDashboard(dashboard);
-                }
-              },
-              items: appProvider.dashboards.map<DropdownMenuItem<String>>((dashboard) {
-                return DropdownMenuItem<String>(
-                  value: dashboard.id,
-                  child: Text(dashboard.name),
-                );
-              }).toList(),
-            ),
           IconButton(
             icon: const Icon(Icons.settings),
             onPressed: () {
