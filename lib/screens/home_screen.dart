@@ -10,18 +10,25 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final dashboardProvider = Provider.of<DashboardProvider>(context);
+    final title = dashboardProvider.selectedGrid?.name ??
+        dashboardProvider.selectedDashboard?.name ??
+        'Dashboard';
+
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Dashboard'),
+        title: Text(title),
         actions: [
           IconButton(
             icon: const Icon(Icons.logout),
             tooltip: 'Logout',
             onPressed: () {
-              Navigator.of(context).pushReplacement(
-                MaterialPageRoute(builder: (context) => const LoginScreen()),
-              );
               Provider.of<AuthService>(context, listen: false).logout();
+              Navigator.of(context).pushReplacement(
+                MaterialPageRoute(
+                  builder: (context) => const LoginScreen(),
+                ),
+              );
             },
           ),
         ],
@@ -37,8 +44,7 @@ class HomeScreen extends StatelessWidget {
 
           if (grid == null) {
             return const Center(
-              child: Text('Please select a grid from the side menu.'),
-            );
+                child: Text('Please select a grid from the side menu.'));
           }
 
           // Temporarily simplified view
