@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:organiseyou/auth/auth_service.dart';
 import 'package:organiseyou/providers/dashboard_provider.dart';
+import 'package:organiseyou/screens/login_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:organiseyou/widgets/side_menu.dart';
 
@@ -18,6 +19,11 @@ class HomeScreen extends StatelessWidget {
             tooltip: 'Logout',
             onPressed: () {
               Provider.of<AuthService>(context, listen: false).logout();
+              Navigator.of(context).pushReplacement(
+                MaterialPageRoute(
+                  builder: (context) => const LoginScreen(),
+                ),
+              );
             },
           ),
         ],
