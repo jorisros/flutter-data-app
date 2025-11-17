@@ -16,31 +16,50 @@ class SideMenu extends StatelessWidget {
             return const Center(child: CircularProgressIndicator());
           }
 
-          return ListView(
+          return Column(
             children: [
-              DrawerHeader(
-                decoration: BoxDecoration(
-                  color: Theme.of(context).colorScheme.primary,
-                ),
-                child: Text(
-                  dashboard.settings.name,
-                  style: TextStyle(
-                    color: Theme.of(context).colorScheme.onPrimary,
-                    fontSize: 24,
-                  ),
+              Expanded(
+                child: ListView(
+                  padding: EdgeInsets.zero,
+                  children: [
+                    DrawerHeader(
+                      decoration: BoxDecoration(
+                        color: Theme.of(context).colorScheme.primary,
+                      ),
+                      child: Text(
+                        dashboard.settings.name,
+                        style: TextStyle(
+                          color: Theme.of(context).colorScheme.onPrimary,
+                          fontSize: 24,
+                        ),
+                      ),
+                    ),
+                    ...dashboard.grids.map((grid) {
+                      return ListTile(
+                        title: Text(grid.name),
+                        onTap: () async {
+                          await dashboardProvider.selectGrid(grid);
+                          if (context.mounted) {
+                            Navigator.pop(context);
+                          }
+                        },
+                      );
+                    }),
+                  ],
                 ),
               ),
-              ...dashboard.grids.map((grid) {
-                return ListTile(
-                  title: Text(grid.name),
-                  onTap: () async {
-                    await dashboardProvider.selectGrid(grid);
-                    if (context.mounted) {
-                      Navigator.pop(context);
-                    }
-                  },
-                );
-              }),
+              const Divider(),
+              ListTile(
+                leading: const Icon(Icons.refresh),
+                title: const Text('Refresh Dashboards'),
+                onTap: () async {
+                  await Provider.of<DashboardProvider>(context, listen: false)
+                      .loadDashboards();
+                  if (context.mounted) {
+                    Navigator.pop(context);
+                  }
+                },
+              ),
             ],
           );
         },
